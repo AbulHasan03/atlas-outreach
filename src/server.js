@@ -859,6 +859,24 @@ app.post('/api/cadence', (req, res) => {
   }
 });
 
+// ── API: trigger cron run via external scheduler ──────────────────────────────
+app.post('/api/run', async (req, res) => {
+  const token = req.headers['x-cron-token'] || req.query.token;
+  if (token !== process.env.CRON_TOKEN) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    res.json({ ok: true, message: 'Run triggered' });
+    // Run async after responding so the HTTP request doesn't time out
+    const { scheduleTodaysEmails } = require('./scheduler');
+    const { sendPendingEmails }    = require('./sender');
+    const queued = await scheduleTodaysEmails();
+    await sendPendingEmails(queued);
+  } catch (err) {
+    console.error('Cron run failed:', err.message);
+  }
+});
+
 function startServer(port = 3000) {
   return new Promise((resolve) => {
     app.listen(port, () => {
