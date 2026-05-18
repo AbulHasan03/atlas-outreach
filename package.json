@@ -1,0 +1,23 @@
+{
+  "name": "atlas-outreach",
+  "version": "1.0.0",
+  "description": "Automated email outreach system for Atlas door controller sales",
+  "main": "run.js",
+  "scripts": {
+    "setup": "node run.js --setup",
+    "preview": "node run.js --preview",
+    "dry-run": "node run.js --dry-run",
+    "send": "node run.js",
+    "report": "node run.js --report",
+    "export": "node run.js --export"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.95.0",
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.105.3",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "resend": "^3.2.0",
+    "sql.js": "^1.12.0"
+  }
+}

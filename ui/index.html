@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Outreach</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0e14;
+    --surface:  #111620;
+    --border:   #1e2736;
+    --border2:  #2a3547;
+    --cyan:     #00d4ff;
+    --cyan-dim: #00d4ff22;
+    --green:    #00e5a0;
+    --red:      #ff4d6d;
+    --amber:    #ffb830;
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --mono:     'DM Mono', monospace;
+    --sans:     'Syne', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--cyan);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  .logo h1 { font-size: 16px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
+  .logo span { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+
+  .header-stats {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .stat-chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-chip b { color: var(--cyan); font-size: 16px; }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tab {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    font-family: var(--mono);
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+  /* ── MAIN ── */
+  main { flex: 1; padding: 28px 32px; max-width: 1400px; width: 100%; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── PREFLIGHT HEADER ── */
+  .preflight-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .preflight-header h2 { font-size: 28px; font-weight: 800; }
+  .preflight-header p { font-size: 13px; color: var(--muted); font-family: var(--mono); margin-top: 4px; }
+
+  .actions { display: flex; gap: 10px; }
+  .btn {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: var(--mono);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 4px;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-primary {
+    background: var(--cyan);
+    color: #000;
+  }
+  .btn-primary:hover { background: #00eeff; transform: translateY(-1px); }
+  .btn-primary:disabled { background: var(--border2); color: var(--muted); cursor: not-allowed; transform: none; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-danger:hover { background: #ff6b84; }
+  .btn-green { background: var(--green); color: #000; }
+  .btn-green:hover { background: #00ffb3; }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+    font-family: var(--mono);
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.12s;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+
+  /* ── TABLE ── */
+  .queue-table { width: 100%; border-collapse: collapse; }
+  .queue-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .queue-table td {
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .row-inner {
+    display: contents;
+  }
+  .queue-table tr.email-row { cursor: pointer; }
+  .queue-table tr.email-row:hover td { background: #111a26; }
+  .queue-table tr.email-row td { padding: 12px 12px; vertical-align: middle; }
+
+  .check-cell { width: 40px; }
+  input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+  }
+
+  .company-name { font-weight: 700; font-size: 14px; }
+  .company-meta { font-size: 11px; font-family: var(--mono); color: var(--muted); margin-top: 2px; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-family: var(--mono);
+    font-weight: 500;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .badge-pacs       { background: #1e3a5f; color: #60a5fa; }
+  .badge-intercom   { background: #1e3d2f; color: #4ade80; }
+  .badge-key_management { background: #3d2a1e; color: #fb923c; }
+  .badge-daycare    { background: #3d1e3d; color: #e879f9; }
+  .badge-gym        { background: #3d3a1e; color: #facc15; }
+  .badge-vms        { background: #1e3d3d; color: #22d3ee; }
+
+  .badge-existing { background: #1e3d2f; color: var(--green); }
+  .badge-new      { background: #1e2736; color: var(--muted); }
+
+  .msg-badge {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+  .msg-badge.due { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+
+  .email-display {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Context input */
+  .context-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .context-input:focus { border-color: var(--cyan); }
+  .context-input::placeholder { color: var(--muted); }
+
+  .gen-btn {
+    padding: 6px 12px;
+    font-size: 10px;
+    font-family: var(--mono);
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+    transition: all 0.12s;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .gen-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .gen-btn.generated { border-color: var(--green); color: var(--green); }
+  .gen-btn.generating { border-color: var(--amber); color: var(--amber); }
+
+  /* ── EMAIL PREVIEW MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    width: 680px;
+    max-width: 95vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  }
+  .modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 700; }
+  .modal-meta { font-size: 11px; font-family: var(--mono); color: var(--muted); margin-top: 4px; }
+  .modal-close {
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 20px; line-height: 1;
+    padding: 0 4px;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+  .email-subject {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .email-subject span { color: var(--muted); font-weight: 400; font-size: 12px; font-family: var(--mono); margin-right: 8px; }
+  .email-body {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    color: #c8d3e0;
+    white-space: pre-wrap;
+  }
+  .editable-field {
+    cursor: text;
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+    outline: 1px solid transparent;
+    transition: background 0.15s, outline-color 0.15s;
+  }
+  .editable-field:hover { background: rgba(255,255,255,0.03); outline-color: var(--border); }
+  .editable-field:focus { background: rgba(0,212,255,0.04); outline-color: var(--border2); }
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  /* ── SEND CONFIRM MODAL ── */
+  .confirm-modal {
+    width: 520px;
+  }
+  .confirm-list {
+    max-height: 280px;
+    overflow-y: auto;
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .confirm-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .confirm-item:last-child { border-bottom: none; }
+  .confirm-item .ci-company { font-weight: 700; flex: 1; }
+  .confirm-item .ci-email { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .confirm-item .ci-msg { font-family: var(--mono); font-size: 11px; color: var(--cyan); }
+
+  /* ── SEND LOG ── */
+  .send-log {
+    display: none;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.8;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .send-log.visible { display: block; }
+  .log-line { display: flex; gap: 12px; align-items: center; }
+  .log-line .ts { color: var(--muted); min-width: 80px; }
+  .log-sent   { color: var(--green); }
+  .log-fail   { color: var(--red); }
+  .log-info   { color: var(--cyan); }
+  .log-done   { color: var(--amber); font-weight: 700; }
+
+  .progress-bar-wrap {
+    display: none;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .progress-bar-wrap.visible { display: block; }
+  .progress-bar {
+    height: 100%;
+    background: var(--cyan);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  /* ── REPORT PANEL ── */
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .metric-card .metric-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .metric-card .metric-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--cyan);
+    line-height: 1;
+  }
+  .metric-card .metric-sub {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vertical-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    font-size: 13px;
+  }
+  .vertical-row:last-child { border-bottom: none; }
+  .vr-name { flex: 1; font-weight: 600; }
+  .vr-bar-wrap { flex: 2; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .vr-bar { height: 100%; background: var(--cyan); border-radius: 3px; }
+  .vr-num { font-family: var(--mono); font-size: 12px; color: var(--muted); min-width: 60px; text-align: right; }
+
+  .activity-feed { display: flex; flex-direction: column; gap: 6px; }
+  .activity-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .activity-icon { font-size: 14px; }
+  .activity-company { font-weight: 600; flex: 1; }
+  .activity-type { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .activity-time { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+  .history-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    gap: 12px;
+  }
+  .history-header:hover { background: var(--surface2); }
+  .history-body { padding: 0 16px 16px; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state h3 { font-size: 18px; font-weight: 700; color: var(--text); }
+  .empty-state p { font-size: 13px; font-family: var(--mono); margin-top: 8px; }
+
+  /* ── LOADING ── */
+  .loading {
+    text-align: center;
+    padding: 48px;
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .spinner {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-bottom: 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .select-all-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--muted);
+  }
+
+  .due-only-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--muted);
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .due-only-toggle input { cursor: pointer; accent-color: var(--cyan); }
+
+  /* ── STATUS BADGES ── */
+  .badge-active    { background: #1a3d2a; color: var(--green); }
+  .badge-replied   { background: #1a2d3d; color: var(--cyan); }
+  .badge-opted_out { background: #3d1a1a; color: var(--red); }
+  .badge-won       { background: #3d381a; color: var(--amber); }
+
+  /* ── FORM ── */
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 10px; font-family: var(--mono); color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .form-input {
+    background: var(--bg); border: 1px solid var(--border2);
+    color: var(--text); font-family: var(--mono); font-size: 13px;
+    padding: 8px 10px; border-radius: 4px; outline: none;
+    transition: border-color 0.15s; width: 100%;
+  }
+  .form-input:focus { border-color: var(--cyan); }
+  textarea.form-input { resize: vertical; }
+  .form-select {
+    background: var(--bg); border: 1px solid var(--border2);
+    color: var(--text); font-family: var(--mono); font-size: 13px;
+    padding: 8px 10px; border-radius: 4px; outline: none;
+    transition: border-color 0.15s; width: 100%; cursor: pointer;
+  }
+  .form-select:focus { border-color: var(--cyan); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark"></div>
+    <div>
+      <h1>Atlas Outreach</h1>
+      <span>ZKTeco USA — Pre-flight Dashboard</span>
+    </div>
+  </div>
+  <div class="header-stats" id="headerStats">
+    <div class="stat-chip"><b id="statDue">—</b> due today</div>
+    <div class="stat-chip"><b id="statTotal">—</b> prospects</div>
+    <div class="stat-chip"><b id="statSent">—</b> sent total</div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-panel="preflight">Pre-flight</div>
+  <div class="tab" data-panel="targets">Targets</div>
+  <div class="tab" data-panel="report">Report</div>
+  <div class="tab" data-panel="history">History</div>
+</div>
+
+<main>
+
+  <!-- PRE-FLIGHT PANEL -->
+  <div class="panel active" id="panel-preflight">
+    <div class="preflight-header">
+      <div>
+        <h2>Today's Queue</h2>
+        <p id="queueSubtitle">Loading...</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="generateAll()">Generate All</button>
+        <button class="btn btn-danger" id="stopGenerateBtn" onclick="stopGenerateAll()" style="display:none">⬛ Stop</button>
+        <button class="btn btn-primary" id="sendBtn" disabled onclick="openConfirm()">Send Selected</button>
+      </div>
+    </div>
+
+    <div class="select-all-row">
+      <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)">
+      <label for="selectAll">Select all due emails</label>
+      <label class="due-only-toggle">
+        <input type="checkbox" id="dueOnlyToggle" checked onchange="renderTable()">
+        Show due only
+      </label>
+    </div>
+
+    <div class="filters" id="verticalFilters"></div>
+
+    <div id="tableContainer">
+      <div class="loading"><div class="spinner"></div><br>Loading queue...</div>
+    </div>
+
+    <div class="progress-bar-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="send-log" id="sendLog"></div>
+  </div>
+
+  <!-- TARGETS PANEL -->
+  <div class="panel" id="panel-targets">
+    <div class="preflight-header">
+      <div>
+        <h2>Targets</h2>
+        <p id="targetsSubtitle">All prospects in cadence</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+          <button class="btn btn-outline" onclick="document.getElementById('csvFileInput').click()">⬆ Import</button>
+          <a href="#" onclick="downloadTemplate();return false" style="font-family:var(--mono);font-size:10px;color:var(--muted);text-decoration:none">↓ template</a>
+          <input type="file" id="csvFileInput" accept=".csv,.tsv,.xlsx" style="display:none" onchange="handleCSVUpload(this)">
+        </div>
+        <button class="btn btn-primary" onclick="openAddModal()" style="align-self:flex-start">+ Add Target</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="targetsSearch" class="context-input"
+        placeholder="Search company, name, email..."
+        style="max-width:260px;padding:8px 12px"
+        oninput="renderTargets()">
+      <div class="filters" id="targetsFilters" style="margin-bottom:0;flex:1"></div>
+    </div>
+    <div id="targetsMissingBanner"></div>
+    <div id="targetsTableContainer">
+      <div class="loading"><div class="spinner"></div><br>Loading...</div>
+    </div>
+  </div>
+
+  <!-- HISTORY PANEL -->
+  <div class="panel" id="panel-history">
+    <div class="preflight-header">
+      <div>
+        <h2>History</h2>
+        <p id="historySubtitle">All sent emails</p>
+      </div>
+      <button class="btn btn-outline" onclick="loadHistoryTab()">Refresh</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="historySearch" class="context-input"
+        placeholder="Search company, subject..."
+        style="max-width:260px;padding:8px 12px"
+        oninput="filterHistory()">
+      <div class="filters" id="historyFilters" style="margin-bottom:0;flex:1"></div>
+    </div>
+    <div id="historyContent">
+      <div class="loading"><div class="spinner"></div><br>Loading...</div>
+    </div>
+  </div>
+
+  <!-- REPORT PANEL -->
+  <div class="panel" id="panel-report">
+    <div class="preflight-header">
+      <div><h2>Report</h2><p id="reportSubtitle">Campaign performance</p></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-outline" onclick="loadReport()">Refresh</button>
+      </div>
+    </div>
+    <div id="reportContent"><div class="loading"><div class="spinner"></div><br>Loading...</div></div>
+
+    <!-- CADENCE SETTINGS -->
+    <div style="margin-top:32px;border-top:1px solid var(--border);padding-top:24px">
+      <div style="margin-bottom:16px">
+        <h3 style="font-size:14px;margin:0 0 4px">Cadence Schedule</h3>
+        <p style="font-size:12px;color:var(--muted);margin:0">Days after message 1 that each follow-up sends. Changes take effect immediately on the next run.</p>
+      </div>
+      <div id="cadenceSettings" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <div class="loading" style="grid-column:1/-1"><div class="spinner"></div></div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
+        <button class="btn btn-primary" onclick="saveCadence()">Save Cadence</button>
+        <button class="btn btn-outline" onclick="resetCadence()">Reset to Default</button>
+        <span id="cadenceSaveStatus" style="font-family:var(--mono);font-size:11px;color:var(--muted)"></span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- EMAIL PREVIEW MODAL -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal" style="width:780px;max-width:95vw;max-height:90vh">
+    <div class="modal-header">
+      <div>
+        <h3 id="modalCompany">—</h3>
+        <div class="modal-meta" id="modalMeta">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" style="flex:1;overflow-y:auto;min-height:300px">
+      <div class="email-subject"><span>Subject</span><span id="modalSubject" class="editable-field" contenteditable="true" spellcheck="false">—</span></div>
+      <div class="email-body editable-field" id="modalBody" contenteditable="true" spellcheck="false" style="min-height:260px">—</div>
+    </div>
+    <div class="modal-footer" style="align-items:center;flex-wrap:wrap;gap:8px">
+      <input type="text" class="context-input" id="regenContext" placeholder="Add context and regenerate..." style="flex:1;min-width:180px">
+      <button class="btn btn-outline" id="regenBtn" onclick="regenerateInModal()">Regenerate</button>
+      <button class="btn btn-outline" id="saveDraftBtn" onclick="saveDraftEdits()">Save Draft</button>
+      <button class="btn btn-outline" id="markReviewedBtn" onclick="markReviewed()" style="display:none">✓ Mark Reviewed</button>
+      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" onclick="sendFromModal()">Send Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- SEND CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal confirm-modal">
+    <div class="modal-header">
+      <div>
+        <h3>Confirm Send</h3>
+        <div class="modal-meta" id="confirmMeta">—</div>
+      </div>
+      <button class="modal-close" onclick="closeConfirm()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px; color:var(--muted); margin-bottom:12px; font-family:var(--mono);">
+        The following emails will be sent. This cannot be undone.
+      </p>
+      <div class="confirm-list" id="confirmList"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" onclick="executeSend()">Send Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal confirm-modal">
+    <div class="modal-header">
+      <div>
+        <h3>Delete Target</h3>
+        <div class="modal-meta" id="deleteModalMeta">—</div>
+      </div>
+      <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px; color:var(--muted); font-family:var(--mono); line-height:1.6">
+        This will permanently remove the prospect and all associated emails and events.<br>This cannot be undone.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" id="deleteConfirmBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT / ADD TARGET MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal" style="width:560px">
+    <div class="modal-header">
+      <div><h3 id="editModalTitle">Edit Target</h3></div>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Company *</label>
+            <input type="text" class="form-input" id="editCompany" placeholder="Acme Corp">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" class="form-input" id="editEmail" placeholder="contact@acme.com">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" id="editFirstName" placeholder="Jane">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" id="editLastName" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="editTitle" placeholder="VP of Product">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Vertical *</label>
+            <select class="form-select" id="editVertical" onchange="handleVerticalChange(this)">
+              <option value="pacs">PACS</option>
+              <option value="intercom">Intercom</option>
+              <option value="key_management">Key Management</option>
+              <option value="daycare">Daycare</option>
+              <option value="gym">Gym</option>
+              <option value="vms">VMS</option>
+              <option value="__custom__" style="font-style:italic">+ Add new vertical...</option>
+            </select>
+            <input type="text" class="context-input" id="editVerticalCustom"
+              placeholder="Vertical name..."
+              style="display:none;margin-top:6px"
+              onkeydown="if(event.key==='Enter')commitCustomVertical(this)"
+              onblur="commitCustomVertical(this)">
+            <div id="customVerticalsList" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type *</label>
+            <select class="form-select" id="editProspectType">
+              <option value="new_prospect">New Prospect</option>
+              <option value="existing_customer">Existing Customer</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="editStatusGroup">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="editStatus">
+            <option value="active">Active</option>
+            <option value="replied">Replied</option>
+            <option value="opted_out">Opted Out</option>
+            <option value="won">Won</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" id="editNotes" rows="3" placeholder="Key context, pain points, history..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn btn-danger" id="deleteProspectBtn" onclick="deleteProspectFromModal()" style="display:none">Delete</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+        <button class="btn btn-primary" id="saveProspectBtn" onclick="saveProspect()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let queue = [];
+let activeFilter = 'all';
+let stats = {};
+let currentModalItem = null;
+let allProspects = [];
+let targetsFilter = 'all';
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadQueue();
+  loadStats();
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('panel-' + t.dataset.panel).classList.add('active');
+      if (t.dataset.panel === 'report')  loadReport();
+      else if (t.dataset.panel === 'targets') loadTargets();
+      else if (t.dataset.panel === 'history') loadHistoryTab();
+    });
+  });
+});
+
+async function loadQueue() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    let res;
+    try {
+      res = await fetch('/api/queue', { signal: controller.signal });
+      clearTimeout(timeout);
+    } catch (err) {
+      clearTimeout(timeout);
+      const msg = err.name === 'AbortError' ? 'Server timed out' : 'Could not connect to server — is it running?';
+      document.getElementById('queueSubtitle').textContent = `⚠️ ${msg}`;
+      document.getElementById('tableContainer').innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><h3>${msg}</h3><p>Start the server with: node run.js --ui</p></div>`;
+      return;
+    }
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    const data = await res.json();
+
+    queue = data.queue;
+    const due = queue.filter(q => q.due).length;
+    document.getElementById('statDue').textContent = due;
+    document.getElementById('queueSubtitle').textContent =
+      `${queue.length} prospect(s) in cadence — ${due} due today — ${data.today}`;
+
+    buildFilters();
+    renderTable();
+  } catch (err) {
+    document.getElementById('queueSubtitle').textContent = `⚠️ Error: ${err.message}`;
+    document.getElementById('tableContainer').innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><h3>Something went wrong</h3><p>${err.message}</p></div>`;
+    console.error('loadQueue error:', err);
+  }
+}
+
+async function loadStats() {
+  const res = await fetch('/api/stats');
+  stats = await res.json();
+  document.getElementById('statTotal').textContent = stats.totals?.total || '—';
+  document.getElementById('statSent').textContent  = stats.sent || '0';
+}
+
+function buildFilters() {
+  const verticals = [...new Set(queue.map(q => q.vertical))];
+  const container = document.getElementById('verticalFilters');
+  container.innerHTML = '';
+  const all = btn('all', 'All');
+  all.classList.add('active');
+  container.appendChild(all);
+  verticals.forEach(v => container.appendChild(btn(v, v.replace('_', ' '))));
+}
+
+function btn(v, label) {
+  const b = document.createElement('button');
+  b.className = 'filter-btn' + (v === activeFilter ? ' active' : '');
+  b.textContent = label;
+  b.onclick = () => {
+    activeFilter = v;
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    renderTable();
+  };
+  return b;
+}
+
+function renderTable() {
+  const dueOnly = document.getElementById('dueOnlyToggle').checked;
+  let rows = queue.filter(q => activeFilter === 'all' || q.vertical === activeFilter);
+  if (dueOnly) rows = rows.filter(q => q.due);
+
+  if (rows.length === 0) {
+    document.getElementById('tableContainer').innerHTML = `
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <h3>No emails due</h3>
+        <p>Toggle "Show due only" off to see the full pipeline</p>
+      </div>`;
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'queue-table';
+  table.innerHTML = `<thead><tr>
+    <th class="check-cell"></th>
+    <th>Company</th>
+    <th>To</th>
+    <th>Vertical</th>
+    <th>Type</th>
+    <th>Msg</th>
+    <th>Extra Context</th>
+    <th>Email</th>
+  </tr></thead>`;
+
+  const tbody = document.createElement('tbody');
+  rows.forEach((item, idx) => {
+    const tr = document.createElement('tr');
+    tr.className = 'email-row';
+    tr.dataset.id = item.prospect_id;
+    tr.innerHTML = `
+      <td class="check-cell" onclick="event.stopPropagation()">
+        <input type="checkbox" class="row-check" data-id="${item.prospect_id}" onchange="updateSendBtn()">
+      </td>
+      <td>
+        <div class="company-name">${item.company}</div>
+        <div class="company-meta">${item.title || '—'}</div>
+      </td>
+      <td>
+        <div class="company-name">${item.first_name} ${item.last_name}</div>
+        <div class="email-display">${item.email}</div>
+      </td>
+      <td><span class="badge badge-${item.vertical}">${item.vertical.replace('_',' ')}</span></td>
+      <td><span class="badge ${item.prospect_type === 'existing_customer' ? 'badge-existing' : 'badge-new'}">${item.prospect_type === 'existing_customer' ? 'existing' : 'new'}</span></td>
+      <td><div class="msg-badge ${item.due ? 'due' : ''}">${item.message_number}</div></td>
+      <td onclick="event.stopPropagation()">
+        <input type="text" class="context-input" placeholder="e.g. they recently raised Series B..."
+          data-id="${item.prospect_id}"
+          value="${item.extra_context || ''}"
+          onchange="queue.find(q=>q.prospect_id==='${item.prospect_id}').extra_context=this.value">
+      </td>
+      <td onclick="event.stopPropagation()">
+        <button class="gen-btn ${item.generated ? (item.needsReview ? 'generating' : 'generated') : ''}" data-id="${item.prospect_id}" onclick="handleGenBtn('${item.prospect_id}', this)">
+          ${item.generated ? (item.needsReview ? '⚠ Review' : '✓ Preview') : 'Generate'}
+        </button>
+      </td>
+    `;
+    tr.addEventListener('click', () => {
+      const q = queue.find(x => x.prospect_id === item.prospect_id);
+      if (q?.generated) openPreview(q);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  document.getElementById('tableContainer').innerHTML = '';
+  document.getElementById('tableContainer').appendChild(table);
+  updateSendBtn();
+}
+
+// ── GENERATE ───────────────────────────────────────────────────────────────────
+function handleGenBtn(prospectId, btnEl) {
+  const item = queue.find(q => q.prospect_id === prospectId);
+  if (item?.generated) openPreview(item);
+  else generateOne(prospectId, btnEl);
+}
+
+async function generateOne(prospectId, btnEl) {
+  const item = queue.find(q => q.prospect_id === prospectId);
+  if (!item) return;
+
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    btnEl.textContent = attempt > 1 ? `Retrying (${attempt}/${maxRetries})...` : 'Generating...';
+    btnEl.className = 'gen-btn generating';
+
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prospect_id: item.prospect_id, message_number: item.message_number, extra_context: item.extra_context })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      item.subject     = data.subject;
+      item.body        = data.body;
+      item.draft_id    = data.draft_id || item.draft_id;
+      item.generated   = true;
+      item.needsReview = !!data.needsReview;
+
+      btnEl.textContent = item.needsReview ? '⚠ Review' : '✓ Preview';
+      btnEl.className   = item.needsReview ? 'gen-btn generating' : 'gen-btn generated';
+      return;
+    } catch (err) {
+      console.error(`Attempt ${attempt} failed for ${prospectId}:`, err.message);
+      if (attempt < maxRetries) {
+        await new Promise(r => setTimeout(r, 1500 * attempt));
+      } else {
+        btnEl.textContent = '✗ Error — click to retry';
+        btnEl.className = 'gen-btn';
+      }
+    }
+  }
+}
+
+let generateAllStopped = false;
+
+async function generateAll() {
+  const dueOnly = document.getElementById('dueOnlyToggle').checked;
+  const targets = queue.filter(q => (activeFilter === 'all' || q.vertical === activeFilter) && (!dueOnly || q.due) && !q.generated);
+  if (!targets.length) return;
+
+  generateAllStopped = false;
+
+  // Show stop button
+  const generateBtn = document.querySelector('button[onclick="generateAll()"]');
+  const stopBtn = document.getElementById('stopGenerateBtn');
+  if (generateBtn) generateBtn.style.display = 'none';
+  if (stopBtn) stopBtn.style.display = '';
+
+  for (const item of targets) {
+    if (generateAllStopped) break;
+    const btn = document.querySelector(`.gen-btn[data-id="${item.prospect_id}"]`);
+    if (btn) {
+      await generateOne(item.prospect_id, btn);
+      await new Promise(r => setTimeout(r, 500));
+    }
+  }
+
+  // Restore generate button
+  if (generateBtn) generateBtn.style.display = '';
+  if (stopBtn) stopBtn.style.display = 'none';
+}
+
+function stopGenerateAll() {
+  generateAllStopped = true;
+  const generateBtn = document.querySelector('button[onclick="generateAll()"]');
+  const stopBtn = document.getElementById('stopGenerateBtn');
+  if (generateBtn) generateBtn.style.display = '';
+  if (stopBtn) stopBtn.style.display = 'none';
+}
+
+// ── SEND ────────────────────────────────────────────────────────────────────────
+function getChecked() {
+  return [...document.querySelectorAll('.row-check:checked')].map(c => c.dataset.id);
+}
+
+function updateSendBtn() {
+  const checked = getChecked();
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = checked.length === 0;
+  btn.textContent = checked.length > 0 ? `Send ${checked.length} Email${checked.length > 1 ? 's' : ''}` : 'Send Selected';
+}
+
+function toggleSelectAll(cb) {
+  document.querySelectorAll('.row-check').forEach(c => c.checked = cb.checked);
+  updateSendBtn();
+}
+
+function openConfirm() {
+  const checked = getChecked();
+  const toSend  = checked.map(id => queue.find(q => q.prospect_id === id)).filter(Boolean);
+  const allGen  = toSend.every(q => q.generated);
+
+  if (!allGen) {
+    alert('Please generate all selected emails before sending.');
+    return;
+  }
+
+  document.getElementById('confirmMeta').textContent = `${toSend.length} email(s) will be sent`;
+  document.getElementById('confirmList').innerHTML = toSend.map(q => `
+    <div class="confirm-item">
+      <span class="badge badge-${q.vertical}">${q.message_number}</span>
+      <span class="ci-company">${q.company}</span>
+      <span class="ci-email">${q.email}</span>
+      <span class="ci-msg">Msg ${q.message_number}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+function closeConfirm() { document.getElementById('confirmModal').classList.remove('open'); }
+
+async function executeSend() {
+  closeConfirm();
+  const checked = getChecked();
+  const toSend  = checked.map(id => queue.find(q => q.prospect_id === id)).filter(q => q?.generated);
+
+  const log  = document.getElementById('sendLog');
+  const pBar = document.getElementById('progressBar');
+  log.classList.add('visible');
+  document.getElementById('progressWrap').classList.add('visible');
+  log.innerHTML = '';
+
+  const addLog = (cls, text) => {
+    const ts = new Date().toLocaleTimeString();
+    log.innerHTML += `<div class="log-line"><span class="ts">${ts}</span><span class="${cls}">${text}</span></div>`;
+    log.scrollTop = log.scrollHeight;
+  };
+
+  addLog('log-info', `Starting send — ${toSend.length} emails queued`);
+
+  const res = await fetch('/api/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ emails: toSend })
+  });
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let sentCount = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop();
+
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue;
+      const evt = JSON.parse(line.slice(5).trim());
+
+      if (evt.type === 'start') {
+        addLog('log-info', `Sending to ${evt.total} recipient(s)...`);
+      } else if (evt.type === 'sending') {
+        addLog('log-info', `Sending → ${evt.company} (${evt.email}) Msg ${evt.message_number}`);
+      } else if (evt.type === 'sent') {
+        sentCount++;
+        pBar.style.width = `${(sentCount / toSend.length) * 100}%`;
+        addLog('log-sent', `✓ Delivered → ${evt.company}`);
+        // Remove from queue
+        queue = queue.filter(q => q.prospect_id !== toSend.find(s => s.company === evt.company)?.prospect_id);
+      } else if (evt.type === 'failed') {
+        addLog('log-fail', `✗ Failed → ${evt.company}: ${evt.error}`);
+      } else if (evt.type === 'done') {
+        addLog('log-done', `─── Done: ${evt.sent} sent, ${evt.failed} failed ───`);
+        loadStats();
+        renderTable();
+      } else if (evt.type === 'error') {
+        addLog('log-fail', `Error: ${evt.message}`);
+      }
+    }
+  }
+}
+
+// ── PREVIEW MODAL ──────────────────────────────────────────────────────────────
+function openPreview(item) {
+  currentModalItem = item;
+  document.getElementById('modalCompany').textContent = item.company;
+  document.getElementById('modalMeta').textContent    = `${item.first_name} ${item.last_name} · ${item.email} · Message ${item.message_number}`;
+  document.getElementById('modalSubject').textContent = item.subject;
+  document.getElementById('modalBody').textContent    = item.body;
+  document.getElementById('regenContext').value       = item.extra_context || '';
+  const regenBtn = document.getElementById('regenBtn');
+  regenBtn.textContent = 'Regenerate';
+  regenBtn.disabled = false;
+
+  // Show/hide review warning
+  const existing = document.getElementById('modalReviewWarning');
+  if (existing) existing.remove();
+  if (item.needsReview) {
+    const warning = document.createElement('div');
+    warning.id = 'modalReviewWarning';
+    warning.style.cssText = `
+      background:color-mix(in srgb,var(--amber) 12%,var(--surface));
+      border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);
+      border-radius:4px;padding:8px 14px;margin-bottom:12px;
+      font-family:var(--mono);font-size:11px;color:var(--amber);
+    `;
+    warning.textContent = '⚠ AI formatting was inconsistent — review before sending. Edit directly below if needed.';
+    document.querySelector('#previewModal .modal-body').prepend(warning);
+  }
+
+  document.getElementById('markReviewedBtn').style.display = item.needsReview ? '' : 'none';
+  document.getElementById('previewModal').classList.add('open');
+}
+
+function markReviewed() {
+  if (!currentModalItem) return;
+  currentModalItem.needsReview = false;
+  const btn = document.querySelector(`.gen-btn[data-id="${currentModalItem.prospect_id}"]`);
+  if (btn) { btn.textContent = '✓ Preview'; btn.className = 'gen-btn generated'; }
+  const warning = document.getElementById('modalReviewWarning');
+  if (warning) warning.remove();
+  document.getElementById('markReviewedBtn').style.display = 'none';
+}
+
+async function saveDraftEdits() {
+  if (!currentModalItem?.draft_id) return;
+  const btn = document.getElementById('saveDraftBtn');
+  const subject = document.getElementById('modalSubject').textContent.trim();
+  const body    = document.getElementById('modalBody').textContent.trim();
+
+  btn.textContent = 'Saving...';
+  btn.disabled    = true;
+
+  try {
+    const res = await fetch(`/api/drafts/${currentModalItem.draft_id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subject, body }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    // Update in-memory queue item
+    currentModalItem.subject = subject;
+    currentModalItem.body    = body;
+    currentModalItem.needsReview = false;
+
+    const tableBtn = document.querySelector(`.gen-btn[data-id="${currentModalItem.prospect_id}"]`);
+    if (tableBtn) { tableBtn.textContent = '✓ Preview'; tableBtn.className = 'gen-btn generated'; }
+    const warning = document.getElementById('modalReviewWarning');
+    if (warning) warning.remove();
+    document.getElementById('markReviewedBtn').style.display = 'none';
+
+    btn.textContent = '✓ Saved';
+    setTimeout(() => { btn.textContent = 'Save Draft'; btn.disabled = false; }, 2000);
+  } catch (err) {
+    btn.textContent = '✗ Failed';
+    btn.disabled = false;
+    console.error(err);
+  }
+}
+
+function closeModal() {
+  document.getElementById('previewModal').classList.remove('open');
+  currentModalItem = null;
+}
+
+async function sendFromModal() {
+  if (!currentModalItem) return;
+  // Capture item and edits BEFORE closing modal
+  const item = currentModalItem;
+  item.subject = document.getElementById('modalSubject').textContent.trim();
+  item.body    = document.getElementById('modalBody').textContent.trim();
+  closeModal();
+  // Check the row and open confirm
+  const checkbox = document.querySelector(`.row-check[data-id="${item.prospect_id}"]`);
+  if (checkbox) checkbox.checked = true;
+  updateSendBtn();
+  openConfirm();
+}
+
+async function regenerateInModal() {
+  if (!currentModalItem) return;
+  const ctx = document.getElementById('regenContext').value;
+  const regenBtn = document.getElementById('regenBtn');
+  regenBtn.textContent = 'Generating...';
+  regenBtn.disabled = true;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prospect_id: currentModalItem.prospect_id, message_number: currentModalItem.message_number, extra_context: ctx })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    currentModalItem.subject = data.subject;
+    currentModalItem.body    = data.body;
+    currentModalItem.extra_context = ctx;
+    currentModalItem.generated = true;
+
+    document.getElementById('modalSubject').textContent = data.subject;
+    document.getElementById('modalBody').textContent    = data.body;
+
+    const tableBtn = document.querySelector(`.gen-btn[data-id="${currentModalItem.prospect_id}"]`);
+    if (tableBtn) { tableBtn.textContent = '✓ Preview'; tableBtn.className = 'gen-btn generated'; }
+    const tableCtx = document.querySelector(`.context-input[data-id="${currentModalItem.prospect_id}"]`);
+    if (tableCtx) tableCtx.value = ctx;
+
+    regenBtn.textContent = 'Regenerate';
+    regenBtn.disabled = false;
+  } catch (err) {
+    regenBtn.textContent = '✗ Error — retry';
+    regenBtn.disabled = false;
+  }
+}
+document.getElementById('modalSubject').addEventListener('input', function() {
+  if (currentModalItem) currentModalItem.subject = this.textContent.trim();
+});
+document.getElementById('modalBody').addEventListener('input', function() {
+  if (currentModalItem) currentModalItem.body = this.textContent;
+});
+document.getElementById('previewModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.getElementById('confirmModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeConfirm(); });
+
+// ── TARGETS ────────────────────────────────────────────────────────────────────
+async function loadTargets() {
+  document.getElementById('targetsTableContainer').innerHTML = '<div class="loading"><div class="spinner"></div><br>Loading...</div>';
+  const res = await fetch('/api/prospects');
+  const data = await res.json();
+  allProspects = data.prospects;
+  document.getElementById('targetsSubtitle').textContent = `${allProspects.length} prospect(s) total`;
+  buildTargetsFilters();
+  renderTargets();
+}
+
+function buildTargetsFilters() {
+  const verticals = [...new Set(allProspects.map(p => p.vertical))];
+  const container = document.getElementById('targetsFilters');
+  container.innerHTML = '';
+  container.appendChild(makeTargetsBtn('all', 'All'));
+  verticals.forEach(v => container.appendChild(makeTargetsBtn(v, v.replace('_', ' '))));
+}
+
+function makeTargetsBtn(v, label) {
+  const b = document.createElement('button');
+  b.className = 'filter-btn' + (v === targetsFilter ? ' active' : '');
+  b.textContent = label;
+  b.onclick = () => {
+    targetsFilter = v;
+    document.querySelectorAll('#targetsFilters .filter-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    renderTargets();
+  };
+  return b;
+}
+
+let missingIdx = -1;
+let missingIds = [];
+
+function isPlaceholder(p) {
+  // Flag as placeholder only if name is literally 'Sales Team' or email is a generic placeholder
+  const isGenericName  = p.first_name === 'Sales' && p.last_name === 'Team';
+  const isGenericEmail = ['sales@','info@','hello@','support@','contact@','partnerships@']
+    .some(x => (p.email || '').startsWith(x));
+  const hasNoName = !p.first_name && !p.last_name;
+  // Only flag if BOTH name and email are generic/missing
+  return isGenericName || (hasNoName && isGenericEmail);
+}
+
+let contactCounts = {};
+
+async function loadContactCounts() {
+  try {
+    const res  = await fetch('/api/contact-counts');
+    const data = await res.json();
+    contactCounts = data.counts || {};
+  } catch {}
+}
+
+async function renderTargets() {
+  // Load contact counts if not yet loaded
+  if (Object.keys(contactCounts).length === 0) await loadContactCounts();
+
+  const search = (document.getElementById('targetsSearch')?.value || '').toLowerCase();
+  let rows = allProspects.filter(p => targetsFilter === 'all' || p.vertical === targetsFilter);
+
+  if (search) {
+    rows = rows.filter(p =>
+      p.company?.toLowerCase().includes(search) ||
+      p.email?.toLowerCase().includes(search) ||
+      ((p.first_name||'') + ' ' + (p.last_name||'')).toLowerCase().includes(search) ||
+      p.notes?.toLowerCase().includes(search)
+    );
+  }
+
+  rows.sort((a, b) => a.company.localeCompare(b.company));
+
+  // Build missing list — only truly missing (no email at all)
+  missingIds = rows.filter(p => !p.email).map(p => p.id);
+  updateMissingBanner();
+
+  const container = document.getElementById('targetsTableContainer');
+
+  if (rows.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">🎯</div>
+      <h3>No targets found</h3>
+      <p>${search ? 'Try a different search' : 'Add your first target above'}</p></div>`;
+    document.getElementById('targetsSubtitle').textContent = 'No results';
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.className = 'queue-table';
+  table.innerHTML = `<thead><tr>
+    <th>Company</th><th>Primary Contact</th><th>Email</th><th>Title</th>
+    <th>Vertical</th><th>Status</th><th></th>
+  </tr></thead>`;
+
+  const tbody = document.createElement('tbody');
+  rows.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.className = 'email-row';
+    tr.id = `target-row-${p.id}`;
+    const name         = [p.first_name, p.last_name].filter(Boolean).join(' ') || '—';
+    const noEmail      = !p.email;
+    const contactCount = contactCounts[p.id] || 0;
+    const contactIcon  = contactCount > 1 ? '👥' : '👤';
+    tr.innerHTML = `
+      <td>
+        <div class="company-name">${p.company}</div>
+        ${noEmail ? `<div style="font-size:10px;color:var(--amber);font-family:var(--mono);margin-top:2px">⚠ needs real contact</div>` : ''}
+      </td>
+      <td><div class="company-name" style="font-size:13px">${name}</div></td>
+      <td><div class="email-display">${p.email || '—'}</div></td>
+      <td><div class="company-meta">${p.title || '—'}</div></td>
+      <td><span class="badge badge-${p.vertical}">${p.vertical.replace('_',' ')}</span></td>
+      <td><span class="badge badge-${p.status}">${p.status.replace('_',' ')}</span></td>
+      <td onclick="event.stopPropagation()" style="display:flex;gap:4px;align-items:center;white-space:nowrap">
+        <button class="gen-btn ${noEmail ? '' : 'generated'}" onclick="openEditModalById('${p.id}')">Edit</button>
+        <button class="gen-btn" id="contacts-btn-${p.id}" style="font-size:13px" onclick="toggleContacts('${p.id}',this)" title="Show all contacts">${contactIcon}</button>
+      </td>
+    `;
+
+    // Expandable contacts row
+    const expandRow = document.createElement('tr');
+    expandRow.id = `contacts-expand-${p.id}`;
+    expandRow.style.display = 'none';
+    expandRow.innerHTML = `<td colspan="7" style="padding:0 0 12px 24px;background:var(--surface2)">
+      <div id="contacts-list-${p.id}" style="padding:8px 0;font-family:var(--mono);font-size:11px;color:var(--text2)">
+        <div style="color:var(--muted)">Loading...</div>
+      </div>
+      <div style="margin-top:8px">
+        <button class="gen-btn" style="font-size:11px" onclick="showAddContactForm('${p.id}')">+ Add Contact</button>
+        <div id="add-contact-form-${p.id}" style="display:none;margin-top:8px;display:none">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr auto;gap:6px;align-items:center">
+            <input class="context-input" id="nc-name-${p.id}" placeholder="Name" style="padding:6px 8px;font-size:11px">
+            <input class="context-input" id="nc-title-${p.id}" placeholder="Title" style="padding:6px 8px;font-size:11px">
+            <input class="context-input" id="nc-email-${p.id}" placeholder="Email" style="padding:6px 8px;font-size:11px">
+            <input class="context-input" id="nc-phone-${p.id}" placeholder="Phone" style="padding:6px 8px;font-size:11px">
+            <input class="context-input" id="nc-notes-${p.id}" placeholder="Internal notes" style="padding:6px 8px;font-size:11px">
+            <button class="btn btn-primary" style="padding:6px 12px;font-size:11px;white-space:nowrap" onclick="saveNewContact('${p.id}')">Save</button>
+          </div>
+        </div>
+      </div>
+    </td>`;
+
+    tbody.appendChild(tr);
+    tbody.appendChild(expandRow);
+  });
+
+  table.appendChild(tbody);
+  container.innerHTML = '';
+  container.appendChild(table);
+
+  document.getElementById('targetsSubtitle').textContent =
+    `${rows.length} prospect${rows.length !== 1 ? 's' : ''}${search ? ` matching "${search}"` : ''}`;
+}
+
+async function toggleContacts(prospectId, btn) {
+  const expandRow = document.getElementById(`contacts-expand-${prospectId}`);
+  const list      = document.getElementById(`contacts-list-${prospectId}`);
+  if (!expandRow) return;
+
+  const isOpen = expandRow.style.display !== 'none';
+  expandRow.style.display = isOpen ? 'none' : 'table-row';
+
+  if (!isOpen) {
+    await loadContactsList(prospectId);
+  }
+}
+
+async function loadContactsList(prospectId) {
+  const list = document.getElementById(`contacts-list-${prospectId}`);
+  const btn  = document.getElementById(`contacts-btn-${prospectId}`);
+  if (!list) return;
+
+  try {
+    const res      = await fetch(`/api/contacts/${prospectId}`);
+    const data     = await res.json();
+    const contacts = data.contacts || [];
+
+    // Update button icon based on contact count
+    if (btn) btn.textContent = contacts.length > 1 ? '👥' : '👤';
+
+    if (!contacts.length) {
+      list.innerHTML = `<span style="color:var(--muted)">No contacts stored.</span>`;
+      return;
+    }
+
+    list.innerHTML = contacts.map((c, i) => {
+      const statusIcon = c.email ? '✅' : c.contact_form ? '📋' : c.phone ? '📞' : '⚠';
+      const isPrimary  = c.is_primary ? `<span style="color:var(--cyan);margin-left:6px;font-size:10px;border:1px solid var(--cyan);border-radius:2px;padding:0 4px">PRIMARY</span>` : '';
+      const parts = [
+        c.name  ? `<strong style="color:var(--text)">${c.name}</strong>` : null,
+        c.title ? `<span style="color:var(--muted)">${c.title}</span>` : null,
+        c.email ? `<span style="color:var(--green)">${c.email}</span>` : null,
+        c.phone ? `<span style="color:var(--text2)">${c.phone}</span>` : null,
+        c.contact_form ? `<a href="${c.contact_form}" target="_blank" style="color:var(--cyan)">form ↗</a>` : null,
+        c.notes ? `<span style="color:var(--muted);font-style:italic">${c.notes}</span>` : null,
+      ].filter(Boolean).join(' · ');
+
+      return `<div style="padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px">
+        <span>${statusIcon}</span>
+        <span style="flex:1">${parts || '<span style="color:var(--muted)">no info</span>'}</span>
+        ${isPrimary}
+        ${!c.is_primary ? `<button onclick="setPrimaryContact(${c.id},'${prospectId}')" style="background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);cursor:pointer;font-size:10px;padding:2px 6px;font-family:var(--mono)">set primary</button>` : ''}
+      </div>`;
+    }).join('');
+  } catch (err) {
+    list.innerHTML = `<span style="color:var(--red)">Failed to load contacts.</span>`;
+  }
+}
+
+function showAddContactForm(prospectId) {
+  const form = document.getElementById(`add-contact-form-${prospectId}`);
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveNewContact(prospectId) {
+  const name  = document.getElementById(`nc-name-${prospectId}`)?.value.trim();
+  const title = document.getElementById(`nc-title-${prospectId}`)?.value.trim();
+  const email = document.getElementById(`nc-email-${prospectId}`)?.value.trim();
+  const phone = document.getElementById(`nc-phone-${prospectId}`)?.value.trim();
+  const notes = document.getElementById(`nc-notes-${prospectId}`)?.value.trim();
+
+  if (!name && !email && !phone) return;
+
+  const status = email ? 'has_email' : phone ? 'phone_only' : 'incomplete';
+
+  try {
+    const res = await fetch('/api/contacts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prospect_id: prospectId, name, title, email, phone, status, notes, is_primary: false }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    // Clear form and reload contacts
+    ['name','title','email','phone','notes'].forEach(f => {
+      const el = document.getElementById(`nc-${f}-${prospectId}`);
+      if (el) el.value = '';
+    });
+    document.getElementById(`add-contact-form-${prospectId}`).style.display = 'none';
+    await loadContactCounts();
+    await loadContactsList(prospectId);
+
+    // Update allProspects if this is now the first email
+    if (email) {
+      const p = allProspects.find(x => x.id === prospectId);
+      if (p && !p.email) { p.email = email; renderTargets(); }
+    }
+  } catch (err) {
+    console.error('Failed to save contact:', err);
+  }
+}
+
+async function setPrimaryContact(contactId, prospectId) {
+  try {
+    await fetch(`/api/contacts/${contactId}/primary`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prospect_id: prospectId }),
+    });
+    await loadContactsList(prospectId);
+  } catch (err) {
+    console.error('Failed to set primary:', err);
+  }
+}
+
+
+function updateMissingBanner() {
+  const banner = document.getElementById('targetsMissingBanner');
+  if (!banner) return;
+  if (missingIds.length === 0) {
+    banner.innerHTML = '';
+    banner.style.cssText = '';
+    return;
+  }
+  banner.style.cssText = `
+    position: sticky; top: 120px; z-index: 50;
+    margin-bottom: 14px;
+  `;
+  banner.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;
+      background:color-mix(in srgb,var(--amber) 10%,var(--surface));
+      border:1px solid color-mix(in srgb,var(--amber) 35%,transparent);
+      border-radius:6px;font-family:var(--mono);font-size:12px;
+      backdrop-filter:blur(4px);">
+      <span style="color:var(--amber)">⚠</span>
+      <span style="color:var(--text2)">${missingIds.length} missing contact info</span>
+      <button class="gen-btn" style="margin-left:auto;padding:4px 10px;font-size:11px"
+        onclick="scrollToNextMissing()">↓</button>
+    </div>`;
+}
+
+function scrollToNextMissing() {
+  if (!missingIds.length) return;
+  missingIdx = (missingIdx + 1) % missingIds.length;
+  const id  = missingIds[missingIdx];
+  const row = document.getElementById(`target-row-${id}`);
+  if (row) {
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    row.style.outline = `2px solid var(--amber)`;
+    row.style.transition = 'outline 0.3s';
+    setTimeout(() => { row.style.outline = ''; }, 2000);
+  }
+}
+
+// ── CSV IMPORT ─────────────────────────────────────────────────────────────────
+let csvImportData = [];
+
+function handleCSVUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+
+  if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+    reader.onload = e => {
+      const wb   = XLSX.read(e.target.result, { type: 'array' });
+      // Try to find Week 2 sheet, otherwise use first sheet
+      const sheetName = wb.SheetNames.find(n => n.toLowerCase().includes('formatted for program'))
+        || wb.SheetNames.find(n => n.toLowerCase().includes('formatted'))
+        || wb.SheetNames.find(n => n.toLowerCase().includes('week 2'))
+        || wb.SheetNames.find(n => n.toLowerCase().includes('week'))
+        || wb.SheetNames[0];
+      const ws   = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      previewExcelRows(rows, file.name + ` (${sheetName})`);
+    };
+    reader.readAsArrayBuffer(file);
+  } else {
+    reader.onload = e => previewCSV(e.target.result, file.name);
+    reader.readAsText(file);
+  }
+  input.value = '';
+}
+
+function previewCSV(text, filename) {
+  const rows = parseImportCSV(text);
+
+  // Detect format — structured (has contact_name col) vs legacy (has contacts col)
+  const isStructured = Object.keys(rows[0] || {}).some(k => k.includes('contact_name') || k.includes('contact_email'));
+
+  let prospects;
+  if (isStructured) {
+    prospects = buildProspectsFromStructured(rows);
+  } else {
+    const valid   = rows.filter(r => r.company && r.company.length > 1
+      && !r.company.toLowerCase().includes('sample')
+      && !r.company.toLowerCase().startsWith('goal'));
+    const deduped = dedupeImportRows(valid);
+    prospects     = deduped.map(buildProspect);
+  }
+
+  csvImportData = prospects;
+  showImportPreview(prospects, filename);
+}
+
+function previewExcelRows(rows, filename) {
+  if (rows.length < 2) return;
+
+  // Map header row to column indices
+  const headerRow = rows[0].map(h => (h || '').toString().toLowerCase().trim());
+  const colIdx = {};
+  headerRow.forEach((h, i) => { colIdx[h] = i; });
+
+  // Convert all data rows to objects keyed by header name
+  const dataRows = rows.slice(1).map(r => {
+    const obj = {};
+    headerRow.forEach((h, i) => { obj[h] = (r[i] || '').toString().trim(); });
+    return obj;
+  });
+
+  // Filter out completely empty rows and sample rows
+  const valid = dataRows.filter(r => {
+    const company = r['company'] || r['company name'] || '';
+    return company.length > 1
+      && !company.toLowerCase().includes('sample')
+      && !company.toLowerCase().startsWith('goal')
+      && !company.toLowerCase().startsWith('week');
+  });
+
+  // Use structured path — carries forward company from previous row
+  const prospects = buildProspectsFromStructured(valid);
+
+  csvImportData = prospects;
+  showImportPreview(prospects, filename);
+}
+
+function buildProspectsFromStructured(rows) {
+  const companyMap = new Map();
+  let lastCompany  = null;
+  let lastVertical = null;
+  let lastWebsite  = null;
+  let lastNotes    = null;
+
+  for (const row of rows) {
+    const rawCompany  = (row['company'] || row['company name'] || '').trim();
+    const rawVertical = (row['vertical'] || row['target vertical(s) and end-users'] || '').trim();
+    const rawWebsite  = (row['website'] || row['url'] || row['site'] || '').trim();
+    const rawNotes    = (row['notes'] || row['note'] || '').trim();
+
+    // Carry forward from previous row if blank
+    const company  = rawCompany  || lastCompany;
+    const vertical = rawVertical || lastVertical;
+    const website  = rawWebsite  || lastWebsite;
+    const notes    = rawNotes    || lastNotes;
+
+    if (!company || company.length < 2) continue;
+
+    // Update carried values when we see a new company
+    if (rawCompany)  lastCompany  = rawCompany;
+    if (rawVertical) lastVertical = rawVertical;
+    if (rawWebsite)  lastWebsite  = rawWebsite;
+    if (rawNotes)    lastNotes    = rawNotes;
+
+    const key = company.toLowerCase().trim();
+
+    if (!companyMap.has(key)) {
+      companyMap.set(key, {
+        company:      company,
+        vertical:     normalizeImportVertical(vertical),
+        website:      website || null,
+        notes:        cleanImportNotes(notes),
+        prospect_type: 'new_prospect',
+        contacts:     [],
+      });
+    } else {
+      // Update notes/website if we get new data on a later row
+      const e = companyMap.get(key);
+      if (!e.notes && notes) e.notes = cleanImportNotes(notes);
+      if (!e.website && website) e.website = website;
+    }
+
+    const name          = (row['contact_name']  || '').trim();
+    const title         = (row['contact_title'] || '').trim();
+    const email         = (row['contact_email'] || '').trim();
+    const phone         = (row['contact_phone'] || '').trim();
+    const form          = (row['contact_form']  || '').trim();
+    const internalNotes = (row['internal_notes'] || row['internal notes'] || '').trim();
+
+    if (name || email || phone || form) {
+      const status = email ? 'has_email' : form ? 'form_only' : phone ? 'phone_only' : 'incomplete';
+      companyMap.get(key).contacts.push({
+        name:           name || null,
+        title:          title || null,
+        email:          email || null,
+        phone:          phone || null,
+        contact_form:   form  || null,
+        internal_notes: internalNotes || null,
+        status,
+        is_primary:     false,
+      });
+    }
+  }
+
+  return [...companyMap.values()].map(p => {
+    // Dedupe contacts by name+email
+    const seen = new Set();
+    p.contacts = p.contacts.filter(c => {
+      const key = `${c.name||''}|${c.email||''}`;
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+
+    // Mark primary
+    const pi = p.contacts.findIndex(c => c.email);
+    if (pi >= 0) p.contacts[pi].is_primary = true;
+    else if (p.contacts.length > 0) p.contacts[0].is_primary = true;
+
+    const primary = p.contacts.find(c => c.is_primary);
+    return { ...p, email: primary?.email || null, title: primary?.title || null };
+  });
+}
+
+function showImportPreview(prospects, filename) {
+  const hasEmail  = prospects.filter(p => p.email).length;
+  const hasPhone  = prospects.filter(p => !p.email && p.contacts?.some(c => c.phone)).length;
+  const hasForm   = prospects.filter(p => !p.email && !p.contacts?.some(c => c.phone) && p.contacts?.some(c => c.contact_form)).length;
+  const noContact = prospects.filter(p => !p.email && !p.contacts?.some(c => c.phone || c.contact_form)).length;
+
+  document.getElementById('csvImportMeta').textContent = `${filename} — ${prospects.length} prospects`;
+  document.getElementById('csvImportStats').innerHTML = `
+    <span style="color:var(--green)">✅ ${hasEmail} with email</span>
+    <span style="color:var(--text2)">📞 ${hasPhone} phone only</span>
+    <span style="color:var(--text2)">📋 ${hasForm} form only</span>
+    <span style="color:var(--amber)">⚠ ${noContact} no contact</span>
+    <span style="color:var(--muted);margin-left:auto">${prospects.filter(p=>p.contacts?.length>1).length} with multiple contacts</span>
+  `;
+  renderImportPreview(prospects);
+  document.getElementById('csvImportModal').classList.add('open');
+}
+function renderImportPreview(prospects) {
+  const preview = document.getElementById('csvImportPreview');
+  preview.innerHTML = `
+    <table class="queue-table" style="font-size:11px;width:100%">
+      <thead><tr>
+        <th style="width:22%">Company</th>
+        <th style="width:10%">Vertical</th>
+        <th style="width:18%">Contacts</th>
+        <th style="width:18%">Email(s)</th>
+        <th style="width:12%">Phone</th>
+        <th style="width:20%">Notes</th>
+      </tr></thead>
+      <tbody>
+        ${prospects.map(p => {
+          const emailContacts = p.contacts?.filter(c => c.email) || [];
+          const phoneContacts = p.contacts?.filter(c => c.phone && !c.email) || [];
+          const formContacts  = p.contacts?.filter(c => c.contact_form && !c.email && !c.phone) || [];
+          const icon = emailContacts.length ? '✅' : formContacts.length ? '📋' : phoneContacts.length ? '📞' : '⚠';
+
+          const contactsHtml = p.contacts?.filter(c => c.name || c.title).length
+            ? p.contacts.filter(c => c.name||c.title).map(c =>
+                `<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;color:var(--text2)">
+                  ${c.name||''}${c.title?`<span style="color:var(--muted)"> · ${c.title}</span>`:''}
+                </div>`).join('')
+            : '<span style="color:var(--muted)">—</span>';
+
+          const emailsHtml = emailContacts.length
+            ? emailContacts.map(c =>
+                `<div style="color:var(--green);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px">${c.email}</div>`
+              ).join('')
+            : `<span style="color:var(--muted)">—</span>`;
+
+          const phones = p.contacts?.filter(c => c.phone).map(c => c.phone);
+          const phoneHtml = phones?.length ? phones[0] : '—';
+
+          return `<tr>
+            <td>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:13px">${icon}</span>
+                <span class="company-name" style="font-size:12px">${p.company}</span>
+              </div>
+            </td>
+            <td><span class="badge badge-${p.vertical}" style="font-size:10px">${p.vertical.replace('_',' ')}</span></td>
+            <td style="font-family:var(--mono);font-size:11px">${contactsHtml}</td>
+            <td style="font-family:var(--mono);font-size:11px">${emailsHtml}</td>
+            <td style="font-family:var(--mono);font-size:11px;color:var(--text2)">${phoneHtml}</td>
+            <td style="font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px" title="${(p.notes||'').replace(/"/g,"'")}">${p.notes||'—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+}
+
+function downloadTemplate() {
+  const rows = [
+    ['vertical','company','website','notes','contact_name','contact_title','contact_email','contact_phone','contact_form','internal_notes'],
+    ['gym_enduser','Example Gym','examplegym.com','Independent gym. 24hr access. Keypad entry currently.','John Smith','Owner','john@examplegym.com','(555) 000-0000','','Cell number. Found via Google Maps.'],
+    ['gym_enduser','Example Gym','','','Jane Doe','Manager','jane@examplegym.com','','','Front desk manager, not decision maker.'],
+    ['gym_enduser','Multi-Contact Gym','multicontactgym.com','Session-based model. No memberships.','Mike Jones','Owner','','(212) 555-1234','','Business line, not cell.'],
+    ['gym_enduser','Form Only Gym','formonlygym.com','Private training gym.','Sarah Brown','Owner','','','https://formonlygym.com/contact','Only contact method is form. Try ContactScraper.'],
+    ['gym_enduser','No Contact Yet','nocontactyet.com','CrossFit gym.','','','','','','No contact info found yet.'],
+  ];
+  const csv  = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'atlas-import-template.csv';
+  a.click();
+}
+
+function closeCSVImport() {
+  document.getElementById('csvImportModal').classList.remove('open');
+  csvImportData = [];
+}
+
+async function confirmCSVImport() {
+  if (!csvImportData.length) return;
+  const btn = document.getElementById('csvImportBtn');
+  btn.textContent = 'Importing...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prospects: csvImportData }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    closeCSVImport();
+    await loadTargets();
+    await loadStats();
+    document.getElementById('targetsSubtitle').textContent =
+      `Import complete — ${data.created} created, ${data.updated} updated`;
+  } catch (err) {
+    btn.textContent = '✗ Failed';
+    btn.disabled = false;
+    console.error(err);
+  }
+}
+
+// ── CSV PARSING HELPERS ───────────────────────────────────────────────────────
+
+function parseImportCSV(text) {
+  // Normalize line endings
+  text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const delim = text.split('\n')[0].includes('\t') ? '\t' : ',';
+
+  // Full RFC-4180 parser that handles quoted fields with embedded newlines
+  const records = [];
+  let pos = 0;
+
+  function parseField() {
+    if (pos >= text.length) return '';
+    if (text[pos] === '"') {
+      pos++; // skip opening quote
+      let val = '';
+      while (pos < text.length) {
+        if (text[pos] === '"') {
+          if (text[pos+1] === '"') { val += '"'; pos += 2; } // escaped quote
+          else { pos++; break; } // closing quote
+        } else {
+          val += text[pos++];
+        }
+      }
+      return val.trim();
+    } else {
+      let val = '';
+      while (pos < text.length && text[pos] !== delim && text[pos] !== '\n') {
+        val += text[pos++];
+      }
+      return val.trim();
+    }
+  }
+
+  function parseRecord() {
+    const fields = [];
+    while (pos < text.length && text[pos] !== '\n') {
+      fields.push(parseField());
+      if (pos < text.length && text[pos] === delim) pos++; // skip delimiter
+    }
+    if (pos < text.length && text[pos] === '\n') pos++; // skip newline
+    return fields;
+  }
+
+  // Parse header row
+  const headers = parseRecord().map(h => h.toLowerCase());
+
+  // Parse data rows
+  while (pos < text.length) {
+    const fields = parseRecord();
+    if (fields.every(f => !f)) continue; // skip blank rows
+    const row = {};
+    headers.forEach((h, i) => { row[h] = fields[i] || ''; });
+    records.push(row);
+  }
+
+  return records;
+}
+
+function splitImportCSV(line) {
+  const r = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { if (q && line[i+1]==='"') { cur+='"'; i++; } else q=!q; }
+    else if (c===',' && !q) { r.push(cur); cur=''; }
+    else cur+=c;
+  }
+  r.push(cur); return r;
+}
+
+function getCol(row, keys) {
+  const k = Object.keys(row).find(k => keys.some(kw => k.includes(kw)));
+  return k ? (row[k]||'').trim() : '';
+}
+
+function dedupeImportRows(rows) {
+  const seen = new Map();
+  let lastCompany = null;
+  let lastVertical = null;
+  let lastWebsite = null;
+
+  for (const row of rows) {
+    const company  = getCol(row, ['company','name','business']);
+    const vertical = getCol(row, ['vertical']);
+    const website  = getCol(row, ['website','url','site']);
+
+    // Carry forward company/vertical/website from previous row if blank
+    const effectiveCompany  = company  || lastCompany;
+    const effectiveVertical = vertical || lastVertical;
+    const effectiveWebsite  = website  || lastWebsite;
+
+    if (!effectiveCompany || effectiveCompany.length < 2) continue;
+
+    // Update carried values when we see a new company row
+    if (company) {
+      lastCompany  = company;
+      lastVertical = vertical || lastVertical;
+      lastWebsite  = website  || lastWebsite;
+    }
+
+    const key = effectiveCompany.toLowerCase().trim();
+
+    if (!seen.has(key)) {
+      seen.set(key, {
+        ...row,
+        company:     effectiveCompany,
+        vertical:    effectiveVertical,
+        website:     effectiveWebsite,
+        _contacts:   [getCol(row, ['contact','target'])].filter(Boolean),
+        _contactRows: [],
+      });
+    } else {
+      const e = seen.get(key);
+      const c = getCol(row, ['contact','target']);
+      if (c) e._contacts.push(c);
+      if (!e.notes && row.notes) e.notes = row.notes;
+      if (!e.website && effectiveWebsite) e.website = effectiveWebsite;
+    }
+
+    // Store structured contact row
+    const name  = (row['contact_name']  || '').trim();
+    const email = (row['contact_email'] || '').trim();
+    const phone = (row['contact_phone'] || '').trim();
+    const form  = (row['contact_form']  || '').trim();
+    const title = (row['contact_title'] || '').trim();
+    const internalNotes = (row['internal_notes'] || row['internal notes'] || '').trim();
+
+    if (name || email || phone || form) {
+      seen.get(key)._contactRows.push({ name, title, email, phone, form, internalNotes });
+    }
+  }
+
+  return [...seen.values()].map(r => ({
+    ...r,
+    company:     r.company,
+    vertical:    r.vertical || r['target vertical(s) and end-users'] || '',
+    website:     r.website,
+    contactsRaw: r._contacts.join('\n'),
+    _structuredContacts: r._contactRows,
+  }));
+}
+
+function buildProspect(row) {
+  const company     = getCol(row, ['company','name','business']);
+  const vertical    = normalizeImportVertical(getCol(row, ['vertical']));
+  const website     = getCol(row, ['website','url','site']) || null;
+  const notesRaw    = getCol(row, ['notes','note','description']);
+  const contactsRaw = row.contactsRaw || getCol(row, ['contact','target']);
+  const notes       = cleanImportNotes(notesRaw);
+  const contacts    = parseImportContacts(contactsRaw);
+  const primary     = contacts.find(c => c.is_primary);
+
+  return { company: company.trim(), vertical, website, notes,
+    prospect_type: 'new_prospect',
+    email: primary?.email || null,
+    title: primary?.title || null,
+    contacts };
+}
+
+function normalizeImportVertical(raw) {
+  const v = (raw||'').toLowerCase();
+  if (v.includes('gym')||v.includes('fitness')||v.includes('sauna')||v.includes('crossfit')) return 'gym_enduser';
+  if (v.includes('pacs')||v.includes('access')) return 'pacs';
+  if (v.includes('intercom')) return 'intercom';
+  if (v.includes('key')) return 'key_management';
+  if (v.includes('daycare')||v.includes('child')) return 'daycare';
+  if (v.includes('visitor')||v.includes('vms')) return 'vms';
+  return v.replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'') || 'gym_enduser';
+}
+
+function cleanImportNotes(raw) {
+  if (!raw) return null;
+  return raw
+    .replace(/(monday|tuesday|wednesday|thursday|friday|saturday|sunday)[^\n]*/gi,'')
+    .replace(/\d{1,2}:\d{2}\s*(am|pm)\s*[-–to]+\s*\d{1,2}:\d{2}\s*(am|pm)/gi,'')
+    .replace(/\d+\s+[A-Z][a-z]+\s+(St|Ave|Blvd|Rd|Dr|Ln|Way|Pl|Ct)[^\n]*/g,'')
+    .replace(/https?:\/\/[^\s|,\n"]+/gi,'')
+    .replace(/\(\d{3}\)[\s.\-]?\d{3}[\s.\-]?\d{4}/g,'')
+    .replace(/\d+\s+locations?\b[.,]?/gi,'')
+    .replace(/\s*\|\s*/g,' ').replace(/\n{3,}/g,'\n\n').replace(/[ \t]+/g,' ').trim() || null;
+}
+
+function parseImportContacts(raw) {
+  if (!raw?.trim()) return [];
+  const EMAIL_R = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
+  const PHONE_R = /(\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})/g;
+  const URL_R   = /https?:\/\/[^\s|,\n"]+/gi;
+  const FORM_K  = /contact|connect|form|reach|talk|schedule|book/i;
+  const fixE    = e => e ? e.replace(/\/com$/,'.com').replace(/\/net$/,'.net') : e;
+
+  const text = raw.replace(/nimblefitness\/com/gi,'nimblefitness.com').replace(/\t/g,' ');
+  const contacts = [];
+  const lines = text.split(/\n/).map(l => l.trim()).filter(Boolean);
+
+  for (const line of lines) {
+    if (/^https?:\/\/\S+$/.test(line)) continue;
+    if (/^\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}$/.test(line)) continue;
+    if (/^\d+\s+\w+\s+(St|Ave|Blvd|Rd|Dr|Lane|Way)\b/i.test(line)) continue;
+    if (/^(manhattan|brooklyn|queens|bronx|nyc)/i.test(line) && line.length < 30) continue;
+    if (/\d{1,2}(am|pm)\s*[-–]\s*\d{1,2}(am|pm)/i.test(line)) continue;
+
+    const email = fixE((line.match(EMAIL_R)||[])[0]||null);
+    const phone = (line.match(PHONE_R)||[])[0]||null;
+    const form  = (line.match(URL_R)||[]).find(u => FORM_K.test(u))||null;
+
+    let name = line.replace(EMAIL_R,'').replace(PHONE_R,'').replace(URL_R,'')
+      .replace(/\|/g,',').split(',')[0]
+      .replace(/^(owner|manager|gm|ceo|founder|co-owner)[:\s]*/i,'').trim();
+
+    const chunks = line.replace(EMAIL_R,'').replace(PHONE_R,'').replace(URL_R,'')
+      .split(/[,|]/).map(s => s.trim()).filter(Boolean);
+    let title = null;
+    if (chunks.length >= 2) {
+      const c2 = chunks[1].trim();
+      if (/owner|ceo|founder|manager|director|trainer|cpt|gm|partner|president|vp/i.test(c2)) title = c2;
+    }
+
+    if (!name || name.length < 2) {
+      if (email || phone || form) contacts.push({ name:null, title:null, email, phone,
+        contact_form:form, status: email?'has_email':form?'form_only':'phone_only', is_primary:false });
+      continue;
+    }
+    contacts.push({ name, title, email, phone, contact_form:form,
+      status: email?'has_email':form?'form_only':phone?'phone_only':'incomplete', is_primary:false });
+  }
+
+  if (contacts.length === 0) {
+    const emails = [...(text.match(EMAIL_R)||[])].map(fixE);
+    const phones = [...(text.match(PHONE_R)||[])];
+    const forms  = [...(text.match(URL_R)||[])].filter(u => FORM_K.test(u));
+    if (emails.length||phones.length||forms.length) {
+      contacts.push({ name:null, title:null, email:emails[0]||null, phone:phones[0]||null,
+        contact_form:forms[0]||null, status:emails[0]?'has_email':forms[0]?'form_only':'phone_only', is_primary:false });
+    }
+  }
+
+  const pi = contacts.findIndex(c => c.email);
+  if (pi >= 0) contacts[pi].is_primary = true;
+  else if (contacts.length > 0) contacts[0].is_primary = true;
+  return contacts;
+}
+
+// ── CUSTOM VERTICALS ──────────────────────────────────────────────────────────
+let customVerticals = JSON.parse(localStorage.getItem('customVerticals') || '[]');
+let pendingDeleteVertical = null;
+
+function handleVerticalChange(sel) {
+  const input = document.getElementById('editVerticalCustom');
+  if (sel.value === '__custom__') {
+    input.style.display = 'block';
+    input.focus();
+  } else {
+    input.style.display = 'none';
+  }
+}
+
+function commitCustomVertical(input) {
+  const raw = input.value.trim();
+  if (!raw) {
+    input.style.display = 'none';
+    document.getElementById('editVertical').value = 'pacs';
+    return;
+  }
+  const val = raw.toLowerCase().replace(/\s+/g, '_');
+  const sel = document.getElementById('editVertical');
+  if (![...sel.options].find(o => o.value === val)) {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = raw;
+    opt.dataset.custom = '1';
+    sel.insertBefore(opt, sel.querySelector('option[value="__custom__"]'));
+    if (!customVerticals.includes(val)) {
+      customVerticals.push(val);
+      localStorage.setItem('customVerticals', JSON.stringify(customVerticals));
+    }
+  }
+  sel.value = val;
+  input.style.display = 'none';
+  input.value = '';
+  renderCustomVerticalsList();
+}
+
+function loadCustomVerticals() {
+  const sel = document.getElementById('editVertical');
+  if (!sel) return;
+  [...sel.options].forEach(o => { if (o.dataset.custom) o.remove(); });
+  for (const v of customVerticals) {
+    if (![...sel.options].find(o => o.value === v)) {
+      const opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = v.replace(/_/g, ' ');
+      opt.dataset.custom = '1';
+      sel.insertBefore(opt, sel.querySelector('option[value="__custom__"]'));
+    }
+  }
+  renderCustomVerticalsList();
+}
+
+function renderCustomVerticalsList() {
+  const container = document.getElementById('customVerticalsList');
+  if (!container) return;
+  if (customVerticals.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = customVerticals.map(v => `
+    <span style="display:inline-flex;align-items:center;gap:4px;
+      background:var(--surface2);border:1px solid var(--border2);
+      border-radius:3px;padding:2px 8px;font-family:var(--mono);font-size:10px;color:var(--text2)">
+      ${v.replace(/_/g,'  ')}
+      <button onclick="confirmDeleteVertical('${v}')" style="background:none;border:none;
+        color:var(--muted);cursor:pointer;padding:0;font-size:12px;line-height:1"
+        title="Delete vertical">×</button>
+    </span>`).join('');
+}
+
+function confirmDeleteVertical(val) {
+  pendingDeleteVertical = val;
+  document.getElementById('deleteVerticalName').textContent = val.replace(/_/g, ' ');
+  document.getElementById('deleteVerticalModal').classList.add('open');
+}
+
+function closeDeleteVerticalModal() {
+  document.getElementById('deleteVerticalModal').classList.remove('open');
+  pendingDeleteVertical = null;
+}
+
+function executeDeleteVertical() {
+  if (!pendingDeleteVertical) return;
+  customVerticals = customVerticals.filter(v => v !== pendingDeleteVertical);
+  localStorage.setItem('customVerticals', JSON.stringify(customVerticals));
+  closeDeleteVerticalModal();
+  loadCustomVerticals();
+}
+
+function openEditModalById(id) {
+  const p = allProspects.find(x => x.id === id);
+  if (p) openEditModal(p);
+}
+
+function openEditModal(p) {
+  document.getElementById('editModalTitle').textContent = 'Edit Target';
+  document.getElementById('editId').value          = p.id;
+  document.getElementById('editCompany').value     = p.company || '';
+  document.getElementById('editEmail').value       = p.email || '';
+  document.getElementById('editFirstName').value   = p.first_name || '';
+  document.getElementById('editLastName').value    = p.last_name || '';
+  document.getElementById('editTitle').value       = p.title || '';
+  document.getElementById('editVertical').value    = p.vertical || 'pacs';
+  document.getElementById('editProspectType').value = p.prospect_type || 'new_prospect';
+  document.getElementById('editStatus').value      = p.status || 'active';
+  document.getElementById('editNotes').value       = p.notes || '';
+  document.getElementById('editStatusGroup').style.display = '';
+  const saveBtn = document.getElementById('saveProspectBtn');
+  saveBtn.textContent = 'Save Changes';
+  saveBtn.disabled = false;
+  document.getElementById('deleteProspectBtn').style.display = '';
+  loadCustomVerticals();
+  document.getElementById('editModal').classList.add('open');
+}
+
+function openAddModal() {
+  document.getElementById('editModalTitle').textContent = 'Add New Target';
+  document.getElementById('editId').value          = '';
+  document.getElementById('editCompany').value     = '';
+  document.getElementById('editEmail').value       = '';
+  document.getElementById('editFirstName').value   = '';
+  document.getElementById('editLastName').value    = '';
+  document.getElementById('editTitle').value       = '';
+  document.getElementById('editVertical').value    = 'pacs';
+  document.getElementById('editProspectType').value = 'new_prospect';
+  document.getElementById('editNotes').value       = '';
+  document.getElementById('editStatusGroup').style.display = 'none';
+  const saveBtn = document.getElementById('saveProspectBtn');
+  saveBtn.textContent = 'Add Target';
+  saveBtn.disabled = false;
+  document.getElementById('deleteProspectBtn').style.display = 'none';
+  loadCustomVerticals();
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeEditModal() { document.getElementById('editModal').classList.remove('open'); }
+
+function deleteProspect(id, company) {
+  document.getElementById('deleteModalMeta').textContent = company;
+  const btn = document.getElementById('deleteConfirmBtn');
+  const fresh = btn.cloneNode(true);
+  btn.parentNode.replaceChild(fresh, btn);
+  fresh.addEventListener('click', async () => {
+    closeDeleteModal();
+    try {
+      const res = await fetch(`/api/prospects/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      await loadTargets();
+      await loadQueue();
+      await loadStats();
+    } catch (err) {
+      alert('Error deleting: ' + err.message);
+    }
+  });
+  document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); }
+
+function deleteProspectFromModal() {
+  const id = document.getElementById('editId').value;
+  const company = document.getElementById('editCompany').value;
+  if (!id) return;
+  closeEditModal();
+  deleteProspect(id, company);
+}
+
+async function saveProspect() {
+  const id      = document.getElementById('editId').value;
+  const company = document.getElementById('editCompany').value.trim();
+  const email   = document.getElementById('editEmail').value.trim();
+  if (!company || !email) { alert('Company and email are required.'); return; }
+
+  const payload = {
+    company,
+    email,
+    first_name:    document.getElementById('editFirstName').value.trim() || null,
+    last_name:     document.getElementById('editLastName').value.trim() || null,
+    title:         document.getElementById('editTitle').value.trim() || null,
+    vertical:      document.getElementById('editVertical').value,
+    prospect_type: document.getElementById('editProspectType').value,
+    notes:         document.getElementById('editNotes').value.trim() || null,
+    status:        document.getElementById('editStatus').value,
+  };
+
+  const btn = document.getElementById('saveProspectBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const res = await fetch(id ? `/api/prospects/${id}` : '/api/prospects', {
+      method: id ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    closeEditModal();
+    await loadTargets();
+    await loadQueue();
+    await loadStats();
+  } catch (err) {
+    alert('Error saving: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = id ? 'Save Changes' : 'Add Target';
+  }
+}
+
+document.getElementById('editModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal(); });
+document.getElementById('deleteModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDeleteModal(); });
+
+// ── HISTORY TAB ────────────────────────────────────────────────────────────────
+let allSentEmails = [];
+let historyMsgFilter = 'all';
+
+async function loadHistoryTab() {
+  document.getElementById('historyContent').innerHTML =
+    `<div class="loading"><div class="spinner"></div><br>Loading...</div>`;
+
+  const res  = await fetch('/api/history');
+  const data = await res.json();
+  allSentEmails = data.emails || [];
+
+  // Build message filter buttons
+  const filters = document.getElementById('historyFilters');
+  filters.innerHTML = '';
+  ['all','1','2','3','4'].forEach(v => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn' + (v === historyMsgFilter ? ' active' : '');
+    b.textContent = v === 'all' ? 'All' : `Msg ${v}`;
+    b.onclick = () => {
+      historyMsgFilter = v;
+      document.querySelectorAll('#historyFilters .filter-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      filterHistory();
+    };
+    filters.appendChild(b);
+  });
+
+  filterHistory();
+}
+
+function filterHistory() {
+  const search = (document.getElementById('historySearch')?.value || '').toLowerCase();
+  let rows = allSentEmails.filter(e => {
+    if (historyMsgFilter !== 'all' && String(e.message_number) !== historyMsgFilter) return false;
+    if (search) {
+      const company = e.prospects?.company || '';
+      return company.toLowerCase().includes(search) ||
+        e.subject?.toLowerCase().includes(search) ||
+        e.body?.toLowerCase().includes(search);
+    }
+    return true;
+  });
+
+  const container = document.getElementById('historyContent');
+  document.getElementById('historySubtitle').textContent =
+    `${rows.length} email${rows.length !== 1 ? 's' : ''} sent`;
+
+  if (rows.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">📭</div>
+      <h3>No sent emails</h3>
+      <p>${search ? 'Try a different search' : 'Emails will appear here after sending'}</p></div>`;
+    return;
+  }
+
+  const msgColor = ['','var(--cyan)','var(--amber)','var(--green)','var(--red)'];
+
+  container.innerHTML = rows.map(e => {
+    const company = e.prospects?.company || '—';
+    const vertical = e.prospects?.vertical || '';
+    const sentAt  = e.sent_at ? new Date(e.sent_at).toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: 'numeric', minute: '2-digit', hour12: true
+    }) : '—';
+    const color = msgColor[e.message_number] || 'var(--muted)';
+
+    return `
+      <div class="history-item" id="hist-${e.id}">
+        <div class="history-header" onclick="toggleHistory(${e.id})">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <div style="background:${color}22;border:1px solid ${color};color:${color};
+              border-radius:3px;padding:2px 8px;font-family:var(--mono);font-size:11px;white-space:nowrap">
+              Msg ${e.message_number}
+            </div>
+            <span style="font-weight:700;font-size:13px;white-space:nowrap">${company}</span>
+            ${vertical ? `<span class="badge badge-${vertical}" style="font-size:10px">${vertical.replace('_',' ')}</span>` : ''}
+            <span style="font-family:var(--mono);font-size:12px;color:var(--text2);
+              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">${e.subject}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap">${sentAt}</span>
+            <span class="history-chevron" style="color:var(--muted);font-size:12px">▾</span>
+          </div>
+        </div>
+        <div id="hist-body-${e.id}" style="display:none;padding:0 16px 16px">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:8px">
+            To: ${e.prospects?.email || '—'} · Sent: ${sentAt}
+          </div>
+          <div style="white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.7;
+            color:var(--text2);padding:16px;background:var(--bg);border-radius:4px;border:1px solid var(--border)">
+${e.body}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── REPORT ─────────────────────────────────────────────────────────────────────
+async function loadReport() {
+  loadCadenceSettings();
+  const res = await fetch('/api/stats');
+  const data = await res.json();
+  const t = data.totals || {};
+  const maxSent = Math.max(...(data.verticals || []).map(v => v.emails_sent || 0), 1);
+  const icons = { sent: '📤', replied: '💬', opted_out: '🚫', failed: '❌', won: '🏆' };
+
+  document.getElementById('reportContent').innerHTML = `
+    <div class="report-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Prospects</div>
+        <div class="metric-value">${t.total || 0}</div>
+        <div class="metric-sub">${t.active || 0} active in cadence</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Emails Sent</div>
+        <div class="metric-value">${data.sent || 0}</div>
+        <div class="metric-sub">across all verticals</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Replied</div>
+        <div class="metric-value" style="color:var(--green)">${t.replied || 0}</div>
+        <div class="metric-sub">cadence paused</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Won</div>
+        <div class="metric-value" style="color:var(--amber)">${t.won || 0}</div>
+        <div class="metric-sub">converted</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px">
+      <div>
+        <div class="section-title">By Vertical</div>
+        ${(data.verticals || []).map(v => `
+          <div class="vertical-row">
+            <div class="vr-name">${v.vertical.replace('_',' ')}</div>
+            <div class="vr-bar-wrap"><div class="vr-bar" style="width:${Math.round((v.emails_sent/maxSent)*100)}%"></div></div>
+            <div class="vr-num">${v.emails_sent || 0} sent · ${v.replied || 0} replied</div>
+          </div>`).join('')}
+      </div>
+      <div>
+        <div class="section-title">Recent Activity</div>
+        <div class="activity-feed">
+          ${(data.recent || []).slice(0, 10).map(ev => `
+            <div class="activity-item" style="cursor:${ev.event_type==='sent'?'pointer':'default'}"
+              onclick="${ev.event_type==='sent' ? `switchToHistory('${ev.prospect_id}','${ev.company}')` : ''}">
+              <span class="activity-icon">${icons[ev.event_type] || '•'}</span>
+              <span class="activity-company">${ev.company}</span>
+              <span class="activity-type">${ev.event_type}${ev.message_number ? ' msg'+ev.message_number : ''}</span>
+              <span class="activity-time">${ev.occurred_at?.slice(0,16).replace('T',' ') || ''}</span>
+              ${ev.event_type==='sent' ? `<span style="color:var(--muted);font-size:10px;font-family:var(--mono)">→</span>` : ''}
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('reportSubtitle').textContent =
+    `Last updated ${new Date().toLocaleTimeString()}`;
+}
+
+function switchToHistory(prospectId, company) {
+  // Switch to history tab and filter by this prospect
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('.tab[data-panel="history"]').classList.add('active');
+  document.getElementById('panel-history').classList.add('active');
+  loadHistoryTab().then(() => {
+    if (prospectId) {
+      document.getElementById('historySearch').value = company;
+      filterHistory();
+    }
+  });
+}
+
+function toggleHistory(id) {
+  const body    = document.getElementById(`hist-body-${id}`);
+  const chevron = document.querySelector(`#hist-${id} .history-chevron`);
+  const open    = body.style.display !== 'none';
+  body.style.display    = open ? 'none' : 'block';
+  if (chevron) chevron.textContent = open ? '▾' : '▴';
+}
+
+// ── CADENCE SETTINGS ──────────────────────────────────────────────────────────
+const DEFAULT_CADENCE = [
+  { message_number: 1, send_on_day: 0,  label: 'Message 1', desc: 'Day 0 — sent immediately' },
+  { message_number: 2, send_on_day: 3,  label: 'Message 2', desc: 'Follow-up with new proof point' },
+  { message_number: 3, send_on_day: 7,  label: 'Message 3', desc: 'Value-add insight + demo link' },
+  { message_number: 4, send_on_day: 14, label: 'Message 4', desc: 'Final offer / pilot program' },
+];
+
+async function loadCadenceSettings() {
+  try {
+    const res  = await fetch('/api/cadence');
+    const data = await res.json();
+    const cadence = data.cadence || DEFAULT_CADENCE;
+    renderCadenceSettings(cadence);
+  } catch {
+    renderCadenceSettings(DEFAULT_CADENCE);
+  }
+}
+
+function renderCadenceSettings(cadence) {
+  const container = document.getElementById('cadenceSettings');
+  if (!container) return;
+
+  const LABELS = {
+    1: { label: 'Message 1', desc: 'Day 0 — sent immediately' },
+    2: { label: 'Message 2', desc: 'Follow-up with new proof point' },
+    3: { label: 'Message 3', desc: 'Value-add insight + demo link' },
+    4: { label: 'Message 4', desc: 'Final offer / pilot program' },
+  };
+
+  container.innerHTML = cadence.map(step => {
+    const { label, desc } = LABELS[step.message_number] || { label: `Message ${step.message_number}`, desc: '' };
+    return `
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:16px">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);margin-bottom:6px">${label}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:12px;color:var(--muted)">Day</span>
+        ${step.message_number === 1
+          ? `<span style="font-family:var(--mono);font-size:20px;color:var(--text)">0</span><span style="font-size:11px;color:var(--muted)">(fixed)</span>`
+          : `<input type="number" id="cadence-day-${step.message_number}"
+              value="${step.send_on_day}" min="1" max="365"
+              style="width:60px;padding:6px 8px;font-family:var(--mono);font-size:18px;
+                background:var(--surface);border:1px solid var(--border);border-radius:4px;
+                color:var(--text);text-align:center">`
+        }
+      </div>
+      <div style="font-size:11px;color:var(--muted)">${desc}</div>
+    </div>`;
+  }).join('');
+}
+
+async function saveCadence() {
+  const days = {
+    2: parseInt(document.getElementById('cadence-day-2')?.value || 4),
+    3: parseInt(document.getElementById('cadence-day-3')?.value || 18),
+    4: parseInt(document.getElementById('cadence-day-4')?.value || 48),
+  };
+
+  // Validate order
+  if (days[2] < 1 || days[3] <= days[2] || days[4] <= days[3]) {
+    document.getElementById('cadenceSaveStatus').textContent = '⚠ Days must be in ascending order';
+    document.getElementById('cadenceSaveStatus').style.color = 'var(--amber)';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/cadence', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ days }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    document.getElementById('cadenceSaveStatus').textContent = '✓ Saved';
+    document.getElementById('cadenceSaveStatus').style.color = 'var(--green)';
+    setTimeout(() => { document.getElementById('cadenceSaveStatus').textContent = ''; }, 3000);
+  } catch (err) {
+    document.getElementById('cadenceSaveStatus').textContent = '✗ Failed';
+    document.getElementById('cadenceSaveStatus').style.color = 'var(--red)';
+  }
+}
+
+async function resetCadence() {
+  document.getElementById('cadence-day-2').value = 3;
+  document.getElementById('cadence-day-3').value = 7;
+  document.getElementById('cadence-day-4').value = 14;
+  await saveCadence();
+}
+</script>
+<!-- CSV IMPORT MODAL -->
+<div class="modal-overlay" id="csvImportModal">
+  <div class="modal" style="width:1100px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column">
+    <div class="modal-header" style="flex-shrink:0">
+      <div>
+        <h3>Import CSV</h3>
+        <div class="modal-meta" id="csvImportMeta">Preview your data before importing</div>
+      </div>
+      <button class="modal-close" onclick="closeCSVImport()">✕</button>
+    </div>
+    <div style="flex-shrink:0;padding:10px 24px;background:var(--surface2);border-bottom:1px solid var(--border);
+      font-family:var(--mono);font-size:12px;display:flex;gap:24px;align-items:center" id="csvImportStats"></div>
+    <div class="modal-body" style="flex:1;overflow-y:auto;padding:0">
+      <div id="csvImportPreview"></div>
+    </div>
+    <div class="modal-footer" style="flex-shrink:0;gap:8px">
+      <button class="btn btn-outline" onclick="closeCSVImport()">Cancel</button>
+      <button class="btn btn-primary" id="csvImportBtn" onclick="confirmCSVImport()">Import All</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE VERTICAL MODAL -->
+<div class="modal-overlay" id="deleteVerticalModal">
+  <div class="modal" style="width:380px">
+    <div class="modal-header">
+      <div>
+        <h3>Delete Vertical</h3>
+        <div class="modal-meta">This only removes it from the dropdown — prospects using it are unaffected.</div>
+      </div>
+      <button class="modal-close" onclick="closeDeleteVerticalModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--text2)">
+        Remove "<span id="deleteVerticalName" style="color:var(--text);font-weight:700"></span>" from the vertical list?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeDeleteVerticalModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="executeDeleteVertical()">Delete</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

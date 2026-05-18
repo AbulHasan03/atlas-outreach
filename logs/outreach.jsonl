@@ -1,0 +1,324 @@
+{"ts":"2026-05-07 17:35:56","level":"info","message":"Scheduling emails for 2026-05-07 (DRY RUN)"}
+{"ts":"2026-05-07 17:35:56","level":"info","message":"Found 23 active prospect(s)"}
+{"ts":"2026-05-07 17:35:59","level":"warn","message":"MAX_SENDS=2 — capping run to 2 of 23 due email(s)"}
+{"ts":"2026-05-07 17:35:59","level":"info","message":"2 email(s) to send today"}
+{"ts":"2026-05-07 17:35:59","level":"debug","message":"[DRY RUN] Would send Message 1 to ACRE Security","email":"sales@acresecurity.com"}
+{"ts":"2026-05-07 17:35:59","level":"debug","message":"[DRY RUN] Would send Message 1 to AMAG Technology","email":"info@amag.com"}
+{"ts":"2026-05-07 20:33:23","level":"info","message":"Generating msg 1","company":"ACRE Security","vertical":"pacs"}
+{"ts":"2026-05-07 20:33:26","level":"info","message":"Generating msg 1","company":"ACRE Security","vertical":"pacs"}
+{"ts":"2026-05-07 20:33:37","level":"success","message":"Gemini generated msg 1","company":"ACRE Security"}
+{"ts":"2026-05-07 20:33:37","level":"warn","message":"Could not parse email response","company":"ACRE Security","message_number":1}
+{"ts":"2026-05-07 20:33:37","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Hardware strategy for ACRE Security\n\nI imagine ACRE Security, like many large PACS platforms, relies heavily on Mercury hardware. That dependency can lead to significant supply chain risks—li"}
+{"ts":"2026-05-07 21:28:40","level":"info","message":"Generating msg 1","company":"AMAG Technology","vertical":"pacs"}
+{"ts":"2026-05-07 21:28:51","level":"success","message":"Gemini generated msg 1","company":"AMAG Technology"}
+{"ts":"2026-05-08 05:52:39","level":"info","message":"Generating msg 1","company":"Keri Systems","vertical":"pacs"}
+{"ts":"2026-05-08 05:52:51","level":"success","message":"Gemini generated msg 1","company":"Keri Systems"}
+{"ts":"2026-05-08 06:02:45","level":"info","message":"Generating msg 1","company":"Gallagher Security","vertical":"pacs"}
+{"ts":"2026-05-08 06:02:58","level":"success","message":"Gemini generated msg 1","company":"Gallagher Security"}
+{"ts":"2026-05-08 06:03:51","level":"info","message":"Generating msg 1","company":"DSX Inc","vertical":"pacs"}
+{"ts":"2026-05-08 06:04:03","level":"success","message":"Gemini generated msg 1","company":"DSX Inc"}
+{"ts":"2026-05-08 06:04:04","level":"info","message":"Generating msg 1","company":"Aiphone","vertical":"intercom"}
+{"ts":"2026-05-08 06:04:19","level":"success","message":"Gemini generated msg 1","company":"Aiphone"}
+{"ts":"2026-05-08 06:04:20","level":"info","message":"Generating msg 1","company":"2N Telecommunications","vertical":"intercom"}
+{"ts":"2026-05-08 06:04:34","level":"success","message":"Gemini generated msg 1","company":"2N Telecommunications"}
+{"ts":"2026-05-08 06:04:35","level":"info","message":"Generating msg 1","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 06:04:48","level":"success","message":"Gemini generated msg 1","company":"Comelit"}
+{"ts":"2026-05-08 06:04:53","level":"info","message":"Generating msg 1","company":"ButterflyMX","vertical":"intercom"}
+{"ts":"2026-05-08 06:05:03","level":"success","message":"Gemini generated msg 1","company":"ButterflyMX"}
+{"ts":"2026-05-08 06:05:04","level":"info","message":"Generating msg 1","company":"Swiftlane","vertical":"intercom"}
+{"ts":"2026-05-08 06:05:20","level":"success","message":"Gemini generated msg 1","company":"Swiftlane"}
+{"ts":"2026-05-08 06:05:21","level":"info","message":"Generating msg 1","company":"ecos systems","vertical":"key_management"}
+{"ts":"2026-05-08 06:05:32","level":"success","message":"Gemini generated msg 1","company":"ecos systems"}
+{"ts":"2026-05-08 06:05:42","level":"info","message":"Generating msg 1","company":"Morse Watchmans","vertical":"key_management"}
+{"ts":"2026-05-08 06:05:52","level":"success","message":"Gemini generated msg 1","company":"Morse Watchmans"}
+{"ts":"2026-05-08 06:05:55","level":"info","message":"Generating msg 1","company":"Keycafe","vertical":"key_management"}
+{"ts":"2026-05-08 06:06:06","level":"success","message":"Gemini generated msg 1","company":"Keycafe"}
+{"ts":"2026-05-08 06:06:06","level":"warn","message":"Could not parse email response","company":"Keycafe","message_number":1}
+{"ts":"2026-05-08 06:06:06","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Keycafe: Stop customer credential re-enrollment for key lockers\n\nMany of your Keycafe customers likely face a significant hurdle when adopting new key management solutions: forcing employees "}
+{"ts":"2026-05-08 06:06:11","level":"info","message":"Generating msg 1","company":"KeyTracer","vertical":"key_management"}
+{"ts":"2026-05-08 06:06:24","level":"success","message":"Gemini generated msg 1","company":"KeyTracer"}
+{"ts":"2026-05-08 06:06:25","level":"info","message":"Generating msg 1","company":"Procare Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:28","level":"info","message":"Generating msg 1","company":"Procare Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:33","level":"info","message":"Generating msg 1","company":"Procare Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:36","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:41","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:46","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 06:06:47","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 06:06:51","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 06:06:54","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 06:06:55","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 06:06:57","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 06:07:01","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 06:07:02","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 06:07:04","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 06:07:08","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 06:07:09","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 06:07:11","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 06:07:15","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 06:07:16","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 06:07:18","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 06:07:22","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 06:07:23","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 06:07:25","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 06:07:29","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 06:07:32","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 06:07:35","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 06:07:40","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 14:46:04","level":"info","message":"Generating msg 2","company":"ACRE Security","vertical":"pacs"}
+{"ts":"2026-05-08 14:46:05","level":"info","message":"Generating msg 2","company":"AMAG Technology","vertical":"pacs"}
+{"ts":"2026-05-08 14:46:06","level":"info","message":"Generating msg 2","company":"Keri Systems","vertical":"pacs"}
+{"ts":"2026-05-08 14:46:07","level":"info","message":"Generating msg 2","company":"Gallagher Security","vertical":"pacs"}
+{"ts":"2026-05-08 14:46:15","level":"success","message":"Gemini generated msg 2","company":"AMAG Technology"}
+{"ts":"2026-05-08 14:46:15","level":"warn","message":"Could not parse email response","company":"AMAG Technology","message_number":2}
+{"ts":"2026-05-08 14:46:15","level":"debug","message":"Raw response snippet","raw":"SUBJECT: AMAG Technology: Imron’s success diversifying hardware for Symmetry\n\nRegarding how Atlas controllers mitigate Mercury volume risk for your Symmetry platform, I wanted to share a related examp"}
+{"ts":"2026-05-08 14:46:17","level":"success","message":"Gemini generated msg 2","company":"Gallagher Security"}
+{"ts":"2026-05-08 14:46:19","level":"success","message":"Gemini generated msg 2","company":"ACRE Security"}
+{"ts":"2026-05-08 14:46:19","level":"warn","message":"Could not parse email response","company":"ACRE Security","message_number":2}
+{"ts":"2026-05-08 14:46:19","level":"debug","message":"Raw response snippet","raw":"SUBJECT: ACRE Security: Eliminating re-credentialing friction\n\nMy last email touched on the supply chain risks and minimum purchase volumes associated with Mercury hardware for PACS developers like AC"}
+{"ts":"2026-05-08 14:46:21","level":"success","message":"Gemini generated msg 2","company":"Keri Systems"}
+{"ts":"2026-05-08 15:07:04","level":"info","message":"Scheduling emails for 2026-05-08 (DRY RUN)"}
+{"ts":"2026-05-08 15:07:05","level":"info","message":"Found 23 active prospect(s)"}
+{"ts":"2026-05-08 15:07:08","level":"info","message":"9 email(s) to process today"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] Procare Software Msg 1 — would generate new","email":"info@procaresoftware.com"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] Playground Software Msg 1 — would generate new","email":"hello@tryplayground.com"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] ABC Fitness Msg 1 — would generate new","email":"info@abcfitness.com"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] TORViC Technologies Msg 1 — would generate new","email":"info@torvic.com"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] RhinoFit Msg 1 — would generate new","email":"support@rhinofit.ca"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] FirmPOS Msg 1 — would generate new","email":"info@firmpos.com"}
+{"ts":"2026-05-08 15:07:09","level":"debug","message":"[DRY RUN] Envoy Msg 1 — would generate new","email":"hello@envoy.com"}
+{"ts":"2026-05-08 15:07:10","level":"debug","message":"[DRY RUN] FacilityOS (DGA Security) Msg 1 — would generate new","email":"info@facilityos.com"}
+{"ts":"2026-05-08 15:07:10","level":"debug","message":"[DRY RUN] Proxyclick Msg 1 — would generate new","email":"hello@proxyclick.com"}
+{"ts":"2026-05-08 16:02:07","level":"info","message":"Generating msg 2","company":"DSX Inc","vertical":"pacs"}
+{"ts":"2026-05-08 16:02:11","level":"info","message":"Generating msg 2","company":"DSX Inc","vertical":"pacs"}
+{"ts":"2026-05-08 16:02:17","level":"info","message":"Generating msg 2","company":"DSX Inc","vertical":"pacs"}
+{"ts":"2026-05-08 16:02:30","level":"success","message":"Gemini generated msg 2","company":"DSX Inc"}
+{"ts":"2026-05-08 16:02:33","level":"info","message":"Generating msg 2","company":"Aiphone","vertical":"intercom"}
+{"ts":"2026-05-08 16:02:57","level":"success","message":"Gemini generated msg 2","company":"Aiphone"}
+{"ts":"2026-05-08 16:02:59","level":"info","message":"Generating msg 2","company":"2N Telecommunications","vertical":"intercom"}
+{"ts":"2026-05-08 16:03:14","level":"success","message":"Gemini generated msg 2","company":"2N Telecommunications"}
+{"ts":"2026-05-08 16:03:15","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 16:03:18","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 16:03:22","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 16:03:35","level":"success","message":"Gemini generated msg 2","company":"Comelit"}
+{"ts":"2026-05-08 16:03:35","level":"warn","message":"Could not parse email response","company":"Comelit","message_number":2}
+{"ts":"2026-05-08 16:03:35","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Comelit Intercoms: VIZpin's Margin & Operational Gains with Atlas\n\nLast week, I outlined how Atlas controllers help intercom vendors like Comelit improve multi-tenant margins and expand crede"}
+{"ts":"2026-05-08 16:03:36","level":"info","message":"Generating msg 2","company":"ButterflyMX","vertical":"intercom"}
+{"ts":"2026-05-08 16:03:50","level":"success","message":"Gemini generated msg 2","company":"ButterflyMX"}
+{"ts":"2026-05-08 16:03:50","level":"warn","message":"Could not parse email response","company":"ButterflyMX","message_number":2}
+{"ts":"2026-05-08 16:03:50","level":"debug","message":"Raw response snippet","raw":"SUBJECT: ButterflyMX Expansion: Biometric ROI insights\n\nBuilding on our last discussion about ButterflyMX's credential flexibility across new property types, especially with increasing demand for biom"}
+{"ts":"2026-05-08 16:03:51","level":"info","message":"Generating msg 2","company":"Swiftlane","vertical":"intercom"}
+{"ts":"2026-05-08 16:04:04","level":"success","message":"Gemini generated msg 2","company":"Swiftlane"}
+{"ts":"2026-05-08 16:04:04","level":"warn","message":"Could not parse email response","company":"Swiftlane","message_number":2}
+{"ts":"2026-05-08 16:04:04","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Swiftlane: Driving Atlas Adoption with Zero Re-credentialing\n\nMy last email highlighted how Armatura multi-tech readers can expand credential options for Swiftlane's Atlas deployments without"}
+{"ts":"2026-05-08 16:04:07","level":"info","message":"Generating msg 2","company":"ecos systems","vertical":"key_management"}
+{"ts":"2026-05-08 16:04:19","level":"info","message":"Generating msg 2","company":"ecos systems","vertical":"key_management"}
+{"ts":"2026-05-08 16:04:32","level":"success","message":"Gemini generated msg 2","company":"ecos systems"}
+{"ts":"2026-05-08 16:04:33","level":"info","message":"Generating msg 2","company":"Morse Watchmans","vertical":"key_management"}
+{"ts":"2026-05-08 16:04:47","level":"success","message":"Gemini generated msg 2","company":"Morse Watchmans"}
+{"ts":"2026-05-08 16:04:47","level":"warn","message":"Could not parse email response","company":"Morse Watchmans","message_number":2}
+{"ts":"2026-05-08 16:04:47","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Morse Watchmans: Key Locker Sales & Supply Chain Stability\n\nLast week, we discussed how re-credentialing existing employees often impacts new key locker deployments.\n\nAnother example is Handy"}
+{"ts":"2026-05-08 16:04:49","level":"info","message":"Generating msg 2","company":"Keycafe","vertical":"key_management"}
+{"ts":"2026-05-08 16:04:59","level":"success","message":"Gemini generated msg 2","company":"Keycafe"}
+{"ts":"2026-05-08 16:04:59","level":"warn","message":"Could not parse email response","company":"Keycafe","message_number":2}
+{"ts":"2026-05-08 16:04:59","level":"debug","message":"Raw response snippet","raw":"SUBJECT: Keycafe: Eliminating credential re-enrollment costs\n\nMy last email highlighted how credential re-enrollment can be a significant hurdle for Keycafe customers adopting new key locker systems.\n"}
+{"ts":"2026-05-08 16:05:06","level":"info","message":"Generating msg 2","company":"KeyTracer","vertical":"key_management"}
+{"ts":"2026-05-08 16:05:20","level":"success","message":"Gemini generated msg 2","company":"KeyTracer"}
+{"ts":"2026-05-08 16:05:30","level":"info","message":"Generating msg 1","company":"Procare Software","vertical":"daycare"}
+{"ts":"2026-05-08 16:05:39","level":"success","message":"Gemini generated msg 1","company":"Procare Software"}
+{"ts":"2026-05-08 16:05:49","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 16:05:54","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 16:05:58","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 16:05:59","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 16:06:02","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 16:06:06","level":"info","message":"Generating msg 1","company":"ABC Fitness","vertical":"gym"}
+{"ts":"2026-05-08 16:06:08","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 16:06:14","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 16:06:19","level":"info","message":"Generating msg 1","company":"TORViC Technologies","vertical":"gym"}
+{"ts":"2026-05-08 16:06:20","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 16:06:25","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 16:06:29","level":"info","message":"Generating msg 1","company":"RhinoFit","vertical":"gym"}
+{"ts":"2026-05-08 16:06:35","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 16:06:37","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 16:06:40","level":"info","message":"Generating msg 1","company":"FirmPOS","vertical":"gym"}
+{"ts":"2026-05-08 16:06:41","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 16:06:43","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 16:06:46","level":"info","message":"Generating msg 1","company":"Envoy","vertical":"vms"}
+{"ts":"2026-05-08 16:06:47","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 16:06:49","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 16:06:52","level":"info","message":"Generating msg 1","company":"FacilityOS (DGA Security)","vertical":"vms"}
+{"ts":"2026-05-08 16:06:53","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 16:06:55","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 16:06:58","level":"info","message":"Generating msg 1","company":"Proxyclick","vertical":"vms"}
+{"ts":"2026-05-08 18:55:53","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 18:56:05","level":"success","message":"Gemini generated msg 2","company":"Comelit"}
+{"ts":"2026-05-08 18:56:06","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 18:56:32","level":"info","message":"Generating msg 2","company":"Comelit","vertical":"intercom"}
+{"ts":"2026-05-08 19:24:37","level":"info","message":"Generating msg 1","company":"Playground Software","vertical":"daycare"}
+{"ts":"2026-05-08 19:24:51","level":"success","message":"Gemini generated msg 1","company":"Playground Software"}
+{"ts":"2026-05-16 05:35:13","level":"info","message":"Generating msg 1","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym"}
+{"ts":"2026-05-16 05:35:23","level":"info","message":"Generating msg 1","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym"}
+{"ts":"2026-05-16 05:35:28","level":"success","message":"Gemini generated msg 1","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-16 05:35:34","level":"success","message":"Gemini generated msg 1","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-16 05:56:14","level":"info","message":"Generating msg 1","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-16 05:56:26","level":"success","message":"Gemini generated msg 1","company":"Tribeca Health & Fitness"}
+{"ts":"2026-05-16 05:59:26","level":"info","message":"Generating msg 1","company":"Gym Decision","vertical":"gym_enduser"}
+{"ts":"2026-05-16 05:59:36","level":"success","message":"Gemini generated msg 1","company":"Gym Decision"}
+{"ts":"2026-05-16 05:59:37","level":"info","message":"Generating msg 1","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-16 05:59:47","level":"success","message":"Gemini generated msg 1","company":"Independent Training Spot (ITS)"}
+{"ts":"2026-05-16 05:59:49","level":"info","message":"Generating msg 1","company":"SportsLab NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:04","level":"success","message":"Gemini generated msg 1","company":"SportsLab NYC"}
+{"ts":"2026-05-16 06:00:05","level":"info","message":"Generating msg 1","company":"LIT Independent Training Gym","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:15","level":"success","message":"Gemini generated msg 1","company":"LIT Independent Training Gym"}
+{"ts":"2026-05-16 06:00:17","level":"info","message":"Generating msg 1","company":"Core Fitness NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:27","level":"success","message":"Gemini generated msg 1","company":"Core Fitness NYC"}
+{"ts":"2026-05-16 06:00:29","level":"info","message":"Generating msg 1","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:40","level":"success","message":"Gemini generated msg 1","company":"Nimble Fitness"}
+{"ts":"2026-05-16 06:00:42","level":"info","message":"Generating msg 1","company":"The Process Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:47","level":"info","message":"Generating msg 1","company":"The Process Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:00:59","level":"success","message":"Gemini generated msg 1","company":"The Process Fitness"}
+{"ts":"2026-05-16 06:01:02","level":"info","message":"Generating msg 1","company":"Dakota Personal Training","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:01:12","level":"success","message":"Gemini generated msg 1","company":"Dakota Personal Training"}
+{"ts":"2026-05-16 06:01:13","level":"info","message":"Generating msg 1","company":"Uptown Movement","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:01:29","level":"success","message":"Gemini generated msg 1","company":"Uptown Movement"}
+{"ts":"2026-05-16 06:01:30","level":"info","message":"Generating msg 1","company":"Mercedes Club","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:01:39","level":"success","message":"Gemini generated msg 1","company":"Mercedes Club"}
+{"ts":"2026-05-16 06:01:40","level":"info","message":"Generating msg 1","company":"CompleteBody FiDi","vertical":"gym_enduser"}
+{"ts":"2026-05-16 06:01:47","level":"success","message":"Gemini generated msg 1","company":"CompleteBody FiDi"}
+{"ts":"2026-05-17 04:40:13","level":"info","message":"Scheduling emails for 2026-05-17"}
+{"ts":"2026-05-17 04:40:14","level":"info","message":"Found 13 active prospect(s)"}
+{"ts":"2026-05-17 04:40:17","level":"info","message":"13 email(s) to process today"}
+{"ts":"2026-05-17 04:40:17","level":"info","message":"Using existing draft for SportsLab NYC Msg 1"}
+{"ts":"2026-05-17 04:40:17","level":"info","message":"Using existing draft for CompleteBody FiDi Msg 1"}
+{"ts":"2026-05-17 04:40:17","level":"info","message":"Generating msg 1","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 04:40:30","level":"success","message":"Gemini generated msg 1","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-17 04:40:30","level":"success","message":"Generated + saved draft: Absolute Power Fitness (Williamsburg) — Message 1"}
+{"ts":"2026-05-17 04:40:30","level":"info","message":"Using existing draft for Gym Decision Msg 1"}
+{"ts":"2026-05-17 04:40:30","level":"info","message":"Using existing draft for Core Fitness NYC Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for The Process Fitness Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Tribeca Health & Fitness Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Independent Training Spot (ITS) Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Nimble Fitness Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Dakota Personal Training Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Mercedes Club Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for Uptown Movement Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"Using existing draft for LIT Independent Training Gym Msg 1"}
+{"ts":"2026-05-17 04:40:31","level":"info","message":"13 email(s) ready to send"}
+{"ts":"2026-05-17 04:40:32","level":"info","message":"Sending 15 email(s)"}
+{"ts":"2026-05-17 04:40:32","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"miguel.absolutepower@gmail.com"}
+{"ts":"2026-05-17 04:40:32","level":"success","message":"Sent to Absolute Power Fitness (Williamsburg)","email":"miguel.absolutepower@gmail.com","message_number":1}
+{"ts":"2026-05-17 04:40:34","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"miguel.absolutepower@gmail.com"}
+{"ts":"2026-05-17 04:40:34","level":"success","message":"Sent to Absolute Power Fitness (Williamsburg)","email":"miguel.absolutepower@gmail.com","message_number":1}
+{"ts":"2026-05-17 04:40:36","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"Mike@tribecagym.com"}
+{"ts":"2026-05-17 04:40:36","level":"success","message":"Sent to Tribeca Health & Fitness","email":"Mike@tribecagym.com","message_number":1}
+{"ts":"2026-05-17 04:40:38","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"train@gymdecision.com"}
+{"ts":"2026-05-17 04:40:38","level":"success","message":"Sent to Gym Decision","email":"train@gymdecision.com","message_number":1}
+{"ts":"2026-05-17 04:40:40","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"info@independenttrainingspot.com"}
+{"ts":"2026-05-17 04:40:40","level":"success","message":"Sent to Independent Training Spot (ITS)","email":"info@independenttrainingspot.com","message_number":1}
+{"ts":"2026-05-17 04:40:41","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"concierge@sportslabnyc.com"}
+{"ts":"2026-05-17 04:40:42","level":"success","message":"Sent to SportsLab NYC","email":"concierge@sportslabnyc.com","message_number":1}
+{"ts":"2026-05-17 04:40:43","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"boaz.aharoni@gmail.com"}
+{"ts":"2026-05-17 04:40:44","level":"success","message":"Sent to LIT Independent Training Gym","email":"boaz.aharoni@gmail.com","message_number":1}
+{"ts":"2026-05-17 04:40:45","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"jason@nimblefitness.com"}
+{"ts":"2026-05-17 04:40:46","level":"success","message":"Sent to Nimble Fitness","email":"jason@nimblefitness.com","message_number":1}
+{"ts":"2026-05-17 04:40:47","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"john@theprocessfitness.com"}
+{"ts":"2026-05-17 04:40:48","level":"success","message":"Sent to The Process Fitness","email":"john@theprocessfitness.com","message_number":1}
+{"ts":"2026-05-17 04:40:50","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"eoghan@uptown-movement.com"}
+{"ts":"2026-05-17 04:40:50","level":"success","message":"Sent to Uptown Movement","email":"eoghan@uptown-movement.com","message_number":1}
+{"ts":"2026-05-17 04:40:52","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"info@completebody.com"}
+{"ts":"2026-05-17 04:40:53","level":"success","message":"Sent to CompleteBody FiDi","email":"info@completebody.com","message_number":1}
+{"ts":"2026-05-17 04:40:54","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"info@corefitnessnyc.com"}
+{"ts":"2026-05-17 04:40:54","level":"success","message":"Sent to Core Fitness NYC","email":"info@corefitnessnyc.com","message_number":1}
+{"ts":"2026-05-17 04:40:56","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"dakotapersonaltraining@gmail.com"}
+{"ts":"2026-05-17 04:40:56","level":"success","message":"Sent to Dakota Personal Training","email":"dakotapersonaltraining@gmail.com","message_number":1}
+{"ts":"2026-05-17 04:40:58","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"tonya@themercedesclub.com"}
+{"ts":"2026-05-17 04:40:58","level":"success","message":"Sent to Mercedes Club","email":"tonya@themercedesclub.com","message_number":1}
+{"ts":"2026-05-17 04:41:00","level":"info","message":"TEST MODE — redirecting to abul.k.hasan03@gmail.com","original":"miguel.absolutepower@gmail.com"}
+{"ts":"2026-05-17 04:41:00","level":"success","message":"Sent to Absolute Power Fitness (Williamsburg)","email":"miguel.absolutepower@gmail.com","message_number":1}
+{"ts":"2026-05-17 04:41:02","level":"info","message":"Done sending"}
+{"ts":"2026-05-17 05:18:15","level":"info","message":"Generating msg 2","company":"SportsLab NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:18:25","level":"success","message":"Gemini generated msg 2","company":"SportsLab NYC"}
+{"ts":"2026-05-17 05:18:26","level":"info","message":"Generating msg 2","company":"CompleteBody FiDi","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:18:36","level":"success","message":"Gemini generated msg 2","company":"CompleteBody FiDi"}
+{"ts":"2026-05-17 05:18:38","level":"info","message":"Generating msg 2","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:18:48","level":"success","message":"Gemini generated msg 2","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-17 05:18:49","level":"info","message":"Generating msg 2","company":"Gym Decision","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:19:03","level":"success","message":"Gemini generated msg 2","company":"Gym Decision"}
+{"ts":"2026-05-17 05:19:04","level":"info","message":"Generating msg 2","company":"Core Fitness NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:19:13","level":"success","message":"Gemini generated msg 2","company":"Core Fitness NYC"}
+{"ts":"2026-05-17 05:19:15","level":"info","message":"Generating msg 2","company":"The Process Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:19:24","level":"success","message":"Gemini generated msg 2","company":"The Process Fitness"}
+{"ts":"2026-05-17 05:19:25","level":"info","message":"Generating msg 2","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:19:36","level":"success","message":"Gemini generated msg 2","company":"Tribeca Health & Fitness"}
+{"ts":"2026-05-17 05:19:37","level":"info","message":"Generating msg 2","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:19:49","level":"success","message":"Gemini generated msg 2","company":"Independent Training Spot (ITS)"}
+{"ts":"2026-05-17 05:19:50","level":"info","message":"Generating msg 2","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:20:00","level":"success","message":"Gemini generated msg 2","company":"Nimble Fitness"}
+{"ts":"2026-05-17 05:20:01","level":"info","message":"Generating msg 2","company":"Dakota Personal Training","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:20:12","level":"success","message":"Gemini generated msg 2","company":"Dakota Personal Training"}
+{"ts":"2026-05-17 05:20:13","level":"info","message":"Generating msg 2","company":"Mercedes Club","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:20:23","level":"success","message":"Gemini generated msg 2","company":"Mercedes Club"}
+{"ts":"2026-05-17 05:20:24","level":"info","message":"Generating msg 2","company":"Uptown Movement","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:20:35","level":"success","message":"Gemini generated msg 2","company":"Uptown Movement"}
+{"ts":"2026-05-17 05:20:36","level":"info","message":"Generating msg 2","company":"LIT Independent Training Gym","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:20:48","level":"success","message":"Gemini generated msg 2","company":"LIT Independent Training Gym"}
+{"ts":"2026-05-17 05:25:51","level":"info","message":"Generating msg 3","company":"SportsLab NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:26:01","level":"success","message":"Gemini generated msg 3","company":"SportsLab NYC"}
+{"ts":"2026-05-17 05:26:02","level":"info","message":"Generating msg 3","company":"CompleteBody FiDi","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:26:18","level":"success","message":"Gemini generated msg 3","company":"CompleteBody FiDi"}
+{"ts":"2026-05-17 05:26:19","level":"info","message":"Generating msg 3","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:26:30","level":"success","message":"Gemini generated msg 3","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-17 05:26:31","level":"info","message":"Generating msg 3","company":"Gym Decision","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:26:42","level":"success","message":"Gemini generated msg 3","company":"Gym Decision"}
+{"ts":"2026-05-17 05:26:43","level":"info","message":"Generating msg 3","company":"Core Fitness NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:26:58","level":"success","message":"Gemini generated msg 3","company":"Core Fitness NYC"}
+{"ts":"2026-05-17 05:26:59","level":"info","message":"Generating msg 3","company":"The Process Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:12","level":"success","message":"Gemini generated msg 3","company":"The Process Fitness"}
+{"ts":"2026-05-17 05:27:13","level":"info","message":"Generating msg 3","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:15","level":"info","message":"Generating msg 3","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:19","level":"info","message":"Generating msg 3","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:20","level":"info","message":"Generating msg 3","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:22","level":"info","message":"Generating msg 3","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:25","level":"info","message":"Generating msg 3","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:27","level":"info","message":"Generating msg 3","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:28","level":"info","message":"Generating msg 3","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-17 05:27:32","level":"info","message":"Generating msg 3","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:40:55","level":"info","message":"Generating msg 3","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:41:13","level":"success","message":"Gemini generated msg 3","company":"Tribeca Health & Fitness"}
+{"ts":"2026-05-18 05:41:16","level":"info","message":"Generating msg 3","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:41:31","level":"success","message":"Gemini generated msg 3","company":"Independent Training Spot (ITS)"}
+{"ts":"2026-05-18 05:41:33","level":"info","message":"Generating msg 3","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:41:45","level":"success","message":"Gemini generated msg 3","company":"Nimble Fitness"}
+{"ts":"2026-05-18 05:41:47","level":"info","message":"Generating msg 3","company":"Dakota Personal Training","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:41:58","level":"success","message":"Gemini generated msg 3","company":"Dakota Personal Training"}
+{"ts":"2026-05-18 05:42:01","level":"info","message":"Generating msg 3","company":"Mercedes Club","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:42:16","level":"success","message":"Gemini generated msg 3","company":"Mercedes Club"}
+{"ts":"2026-05-18 05:42:18","level":"info","message":"Generating msg 3","company":"Uptown Movement","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:42:32","level":"success","message":"Gemini generated msg 3","company":"Uptown Movement"}
+{"ts":"2026-05-18 05:42:37","level":"info","message":"Generating msg 3","company":"LIT Independent Training Gym","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:42:54","level":"success","message":"Gemini generated msg 3","company":"LIT Independent Training Gym"}
+{"ts":"2026-05-18 05:45:08","level":"info","message":"Generating msg 4","company":"SportsLab NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:45:20","level":"success","message":"Gemini generated msg 4","company":"SportsLab NYC"}
+{"ts":"2026-05-18 05:45:21","level":"info","message":"Generating msg 4","company":"CompleteBody FiDi","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:45:34","level":"success","message":"Gemini generated msg 4","company":"CompleteBody FiDi"}
+{"ts":"2026-05-18 05:45:35","level":"info","message":"Generating msg 4","company":"Absolute Power Fitness (Williamsburg)","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:45:49","level":"success","message":"Gemini generated msg 4","company":"Absolute Power Fitness (Williamsburg)"}
+{"ts":"2026-05-18 05:45:50","level":"info","message":"Generating msg 4","company":"Gym Decision","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:46:00","level":"success","message":"Gemini generated msg 4","company":"Gym Decision"}
+{"ts":"2026-05-18 05:46:01","level":"info","message":"Generating msg 4","company":"Core Fitness NYC","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:46:13","level":"success","message":"Gemini generated msg 4","company":"Core Fitness NYC"}
+{"ts":"2026-05-18 05:46:14","level":"info","message":"Generating msg 4","company":"The Process Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:46:25","level":"success","message":"Gemini generated msg 4","company":"The Process Fitness"}
+{"ts":"2026-05-18 05:46:26","level":"info","message":"Generating msg 4","company":"Tribeca Health & Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:46:40","level":"success","message":"Gemini generated msg 4","company":"Tribeca Health & Fitness"}
+{"ts":"2026-05-18 05:46:41","level":"info","message":"Generating msg 4","company":"Independent Training Spot (ITS)","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:46:58","level":"success","message":"Gemini generated msg 4","company":"Independent Training Spot (ITS)"}
+{"ts":"2026-05-18 05:46:59","level":"info","message":"Generating msg 4","company":"Nimble Fitness","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:47:11","level":"success","message":"Gemini generated msg 4","company":"Nimble Fitness"}
+{"ts":"2026-05-18 05:47:13","level":"info","message":"Generating msg 4","company":"Dakota Personal Training","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:47:25","level":"success","message":"Gemini generated msg 4","company":"Dakota Personal Training"}
+{"ts":"2026-05-18 05:47:26","level":"info","message":"Generating msg 4","company":"Mercedes Club","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:47:40","level":"success","message":"Gemini generated msg 4","company":"Mercedes Club"}
+{"ts":"2026-05-18 05:47:42","level":"info","message":"Generating msg 4","company":"Uptown Movement","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:47:56","level":"success","message":"Gemini generated msg 4","company":"Uptown Movement"}
+{"ts":"2026-05-18 05:47:57","level":"info","message":"Generating msg 4","company":"LIT Independent Training Gym","vertical":"gym_enduser"}
+{"ts":"2026-05-18 05:48:08","level":"success","message":"Gemini generated msg 4","company":"LIT Independent Training Gym"}
