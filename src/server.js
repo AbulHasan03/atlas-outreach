@@ -8,10 +8,129 @@ require('dotenv').config();
 const express  = require('express');
 const path     = require('path');
 const fs       = require('fs');
+const crypto   = require('crypto');
 const { getClient, dbGet, dbAll, dbInsert, dbUpdate } = require('./db');
 const { generateEmail }  = require('./generate');
 const { sendPendingEmails } = require('./sender');
 const cadence  = require('../config/cadence');
+
+const app = express();
+app.use(express.json());
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const UI_PASSWORD  = process.env.UI_PASSWORD || 'atlas2024';
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+const COOKIE_NAME  = 'atlas_session';
+const COOKIE_TTL   = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+function makeToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+function signToken(token) {
+  return crypto.createHmac('sha256', SESSION_SECRET).update(token).digest('hex') + '.' + token;
+}
+
+function verifyToken(signed) {
+  if (!signed) return false;
+  const [sig, token] = signed.split('.');
+  if (!token) return false;
+  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(token).digest('hex');
+  return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+}
+
+function parseCookies(req) {
+  const cookies = {};
+  const header = req.headers.cookie || '';
+  header.split(';').forEach(part => {
+    const [k, ...v] = part.trim().split('=');
+    if (k) cookies[k.trim()] = decodeURIComponent(v.join('='));
+  });
+  return cookies;
+}
+
+function requireAuth(req, res, next) {
+  if (req.path === '/login' || req.path === '/api/login') return next();
+  const cookies = parseCookies(req);
+  if (verifyToken(cookies[COOKIE_NAME])) return next();
+  if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorized' });
+  res.redirect('/login');
+}
+
+app.use(requireAuth);
+
+// ── LOGIN PAGE ────────────────────────────────────────────────────────────────
+app.get('/login', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <title>Atlas Outreach — Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d1117; color: #e6edf3; font-family: -apple-system, sans-serif;
+      display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+      padding: 40px; width: 100%; max-width: 360px; }
+    .logo { font-size: 13px; color: #00d4ff; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 8px; }
+    h1 { font-size: 20px; margin-bottom: 24px; color: #e6edf3; }
+    label { display: block; font-size: 12px; color: #8b949e; margin-bottom: 6px; }
+    input { width: 100%; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
+      border-radius: 6px; color: #e6edf3; font-size: 14px; outline: none; }
+    input:focus { border-color: #00d4ff; }
+    button { width: 100%; margin-top: 16px; padding: 10px; background: #00d4ff;
+      color: #0d1117; border: none; border-radius: 6px; font-size: 14px;
+      font-weight: 700; cursor: pointer; letter-spacing: 1px; }
+    button:hover { background: #00b8d9; }
+    .error { color: #f85149; font-size: 12px; margin-top: 12px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">Atlas Outreach</div>
+    <h1>Sign in</h1>
+    <label>Password</label>
+    <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">SIGN IN</button>
+    <div class="error" id="err">Incorrect password</div>
+  </div>
+  <script>
+    async function login() {
+      const pw = document.getElementById('pw').value;
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+      if (res.ok) {
+        window.location.href = '/';
+      } else {
+        document.getElementById('err').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>`);
+});
+
+app.post('/api/login', (req, res) => {
+  const { password } = req.body;
+  if (password !== UI_PASSWORD) {
+    return res.status(401).json({ error: 'Incorrect password' });
+  }
+  const token  = makeToken();
+  const signed = signToken(token);
+  res.setHeader('Set-Cookie',
+    `${COOKIE_NAME}=${encodeURIComponent(signed)}; HttpOnly; Path=/; Max-Age=${COOKIE_TTL / 1000}; SameSite=Strict`
+  );
+  res.json({ ok: true });
+});
+
+app.post('/api/logout', (req, res) => {
+  res.setHeader('Set-Cookie', `${COOKIE_NAME}=; HttpOnly; Path=/; Max-Age=0`);
+  res.json({ ok: true });
+});
 
 const app = express();
 app.use(express.json());

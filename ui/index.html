@@ -597,6 +597,7 @@
     <div class="stat-chip"><b id="statDue">—</b> due today</div>
     <div class="stat-chip"><b id="statTotal">—</b> prospects</div>
     <div class="stat-chip"><b id="statSent">—</b> sent total</div>
+    <button onclick="logout()" style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);cursor:pointer;font-size:11px;padding:4px 10px;font-family:var(--mono);margin-left:4px">sign out</button>
   </div>
 </header>
 
@@ -2203,6 +2204,11 @@ function parseImportContacts(raw) {
   if (pi >= 0) contacts[pi].is_primary = true;
   else if (contacts.length > 0) contacts[0].is_primary = true;
   return contacts;
+}
+
+async function logout() {
+  await fetch('/api/logout', { method: 'POST' });
+  window.location.href = '/login';
 }
 
 // ── CUSTOM VERTICALS ──────────────────────────────────────────────────────────
