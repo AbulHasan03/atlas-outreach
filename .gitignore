@@ -3,3 +3,8 @@ node_modules/
 *.csv
 data/*.db
 *.db
+*.db
+*.db
+src/backup/
+logs/
+db/
