@@ -1,0 +1,77 @@
+services:
+  # ── Web Service — UI Dashboard ─────────────────────────────────────────────
+  - type: web
+    name: atlas-outreach-ui
+    runtime: node
+    buildCommand: npm install
+    startCommand: node run.js --ui
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SENDER_FROM
+        sync: false
+      - key: SENDER_NAME
+        sync: false
+      - key: SENDER_TITLE
+        sync: false
+      - key: SENDER_PHONE
+        sync: false
+      - key: REPLY_TO
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: TEST_EMAIL_OVERRIDE
+        sync: false
+      - key: UI_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: MAX_SENDS
+        value: 12
+      - key: CRON_SEND_TIME
+        value: "08:00"
+
+  # ── Cron Job — Daily Email Send ────────────────────────────────────────────
+  - type: cron
+    name: atlas-outreach-cron
+    runtime: node
+    buildCommand: npm install
+    schedule: "0 12 * * *"  # 8am ET = 12pm UTC
+    startCommand: node run.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SENDER_FROM
+        sync: false
+      - key: SENDER_NAME
+        sync: false
+      - key: SENDER_TITLE
+        sync: false
+      - key: SENDER_PHONE
+        sync: false
+      - key: REPLY_TO
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: TEST_EMAIL_OVERRIDE
+        sync: false
+      - key: MAX_SENDS
+        value: 12
