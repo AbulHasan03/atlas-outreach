@@ -132,9 +132,6 @@ app.post('/api/logout', (req, res) => {
   res.json({ ok: true });
 });
 
-const app = express();
-app.use(express.json());
-
 // Prevent browser caching of the UI
 app.use((req, res, next) => {
   if (!req.path.startsWith('/api')) {
