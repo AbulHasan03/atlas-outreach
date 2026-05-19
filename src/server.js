@@ -50,7 +50,7 @@ function parseCookies(req) {
 }
 
 function requireAuth(req, res, next) {
-  if (req.path === '/login' || req.path === '/api/login') return next();
+  if (req.path === '/login' || req.path === '/api/login' || req.path === '/api/run') return next();
   const cookies = parseCookies(req);
   if (verifyToken(cookies[COOKIE_NAME])) return next();
   if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorized' });
