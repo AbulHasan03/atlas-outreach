@@ -881,6 +881,7 @@
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────────────
 let queue = [];
+let generationOrder = [];
 let activeFilter = 'all';
 let stats = {};
 let currentModalItem = null;
@@ -923,6 +924,7 @@ async function loadQueue() {
     const data = await res.json();
 
     queue = data.queue;
+    generationOrder = data.generationOrder || queue.filter(q => q.due).map(q => q.prospect_id);
     const due = queue.filter(q => q.due).length;
     document.getElementById('statDue').textContent = due;
     document.getElementById('queueSubtitle').textContent =
@@ -1090,27 +1092,39 @@ let generateAllStopped = false;
 
 async function generateAll() {
   const dueOnly = document.getElementById('dueOnlyToggle').checked;
-  const targets = queue.filter(q => (activeFilter === 'all' || q.vertical === activeFilter) && (!dueOnly || q.due) && !q.generated);
-  if (!targets.length) return;
+
+  // Display order for the table
+  const displayTargets = queue.filter(q =>
+    (activeFilter === 'all' || q.vertical === activeFilter) && (!dueOnly || q.due) && !q.generated
+  );
+  if (!displayTargets.length) return;
+
+  // Generation order — use server's priority order (contact quality + least recently generated)
+  const priorityIds = generationOrder.filter(id =>
+    displayTargets.some(t => t.prospect_id === id)
+  );
+  // Any not in generationOrder go at the end
+  const remainingIds = displayTargets
+    .filter(t => !priorityIds.includes(t.prospect_id))
+    .map(t => t.prospect_id);
+  const orderedIds = [...priorityIds, ...remainingIds];
 
   generateAllStopped = false;
 
-  // Show stop button
   const generateBtn = document.querySelector('button[onclick="generateAll()"]');
   const stopBtn = document.getElementById('stopGenerateBtn');
   if (generateBtn) generateBtn.style.display = 'none';
   if (stopBtn) stopBtn.style.display = '';
 
-  for (const item of targets) {
+  for (const prospectId of orderedIds) {
     if (generateAllStopped) break;
-    const btn = document.querySelector(`.gen-btn[data-id="${item.prospect_id}"]`);
+    const btn = document.querySelector(`.gen-btn[data-id="${prospectId}"]`);
     if (btn) {
-      await generateOne(item.prospect_id, btn);
+      await generateOne(prospectId, btn);
       await new Promise(r => setTimeout(r, 500));
     }
   }
 
-  // Restore generate button
   if (generateBtn) generateBtn.style.display = '';
   if (stopBtn) stopBtn.style.display = 'none';
 }
@@ -1638,7 +1652,6 @@ async function setPrimaryContact(contactId, prospectId) {
     console.error('Failed to set primary:', err);
   }
 }
-
 
 function updateMissingBanner() {
   const banner = document.getElementById('targetsMissingBanner');

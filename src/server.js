@@ -240,7 +240,43 @@ app.get('/api/queue', async (req, res) => {
       }
     }
 
-    res.json({ queue, today });
+    // ── SORT QUEUE ─────────────────────────────────────────────────────────────
+    // Display: due items alphabetically first, then upcoming by date
+    // Generation: contact quality first, then least recently generated
+
+    const GENERIC_PREFIXES = ['info@','contact@','hello@','support@','admin@','gym@','concierge@'];
+
+    function contactScore(item) {
+      const email = (item.email || '').toLowerCase();
+      if (!email) return 2;
+      if (GENERIC_PREFIXES.some(p => email.startsWith(p))) return 1;
+      return 0;
+    }
+
+    const dueItems = queue
+      .filter(q => q.due)
+      .sort((a, b) => a.company.localeCompare(b.company));
+
+    const upcomingItems = queue
+      .filter(q => !q.due)
+      .sort((a, b) => {
+        const dateDiff = a.scheduled_date.localeCompare(b.scheduled_date);
+        if (dateDiff !== 0) return dateDiff;
+        return a.company.localeCompare(b.company);
+      });
+
+    // Generation priority order (used by Generate All in UI)
+    const generationOrder = [...dueItems].sort((a, b) => {
+      const scoreDiff = contactScore(a) - contactScore(b);
+      if (scoreDiff !== 0) return scoreDiff;
+      const aGen = a.draft_updated_at ? new Date(a.draft_updated_at).getTime() : 0;
+      const bGen = b.draft_updated_at ? new Date(b.draft_updated_at).getTime() : 0;
+      return aGen - bGen;
+    });
+
+    const sortedQueue = [...dueItems, ...upcomingItems];
+
+    res.json({ queue: sortedQueue, generationOrder: generationOrder.map(q => q.prospect_id), today });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
