@@ -49,7 +49,9 @@ async function sendPendingEmails(options = {}) {
       }
 
       const toName    = [prospect.first_name, prospect.last_name].filter(Boolean).join(' ');
-      const toAddress = TEST_OVERRIDE ? `${toName} <${TEST_OVERRIDE}>` : `${toName} <${prospect.email}>`;
+      const toEmail   = TEST_OVERRIDE || prospect.email;
+      // In test mode use plain email — Resend test mode rejects "Name <email>" format
+      const toAddress = TEST_OVERRIDE ? toEmail : (toName ? `${toName} <${toEmail}>` : toEmail);
 
       if (TEST_OVERRIDE) logger.info(`TEST MODE — redirecting to ${TEST_OVERRIDE}`, { original: prospect.email });
 
