@@ -179,6 +179,17 @@ WRITING RULES:
 - When relevant, emphasize that ZKTeco manufactures its entire product line in-house —
   no dependency on third-party component suppliers. Guaranteed availability, consistent quality.
 
+SUBJECT LINE RULES — avoid spam filters:
+- Never use: "Last chance", "Final offer", "Final opportunity", "Don't miss", "Act now",
+  "Limited time", "Urgent", "Free", "Guaranteed", "No risk", "Risk-free", "Winner",
+  "Congratulations", "Claim your", "You've been selected", exclamation marks,
+  or dollar amounts ($25,200, $32K, etc.) in the subject line.
+- Keep subject lines under 50 characters where possible.
+- Subject lines should read like an email from a colleague, not a sales blast.
+  Good: "Access control for [Company]" or "Quick question about your front door"
+  Bad: "Final Offer: Recover $25,200+ Annually at [Company]!"
+- Dollar amounts and ROI stats belong in the body, never the subject.
+
 OUTPUT FORMAT — respond ONLY in this exact format, no extra text, no markdown:
 <subject>subject line here</subject>
 <body>

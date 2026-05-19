@@ -34,11 +34,11 @@ const cadence = [
   {
     message_number: 4,
     send_on_day: 14,
-    subject_tone: "direct, creates urgency",
-    purpose: "Final touch in the automated cadence. Make the most concrete offer: a no-risk pilot program or a free hardware sample shipped to their location. Create mild urgency (limited pilot slots, end of quarter, etc.). Make it easy to say yes with a single click or reply.",
+    subject_tone: "low-key, direct, no pressure",
+    purpose: "Final touch in the automated cadence. Make a concrete, easy offer — a no-risk pilot or a free hardware demo unit shipped to their location. Keep it short and pressure-free. Do NOT use urgency language, countdown language, or 'last chance' framing. Just make it easy to say yes with a simple reply.",
     length: "very short — 2 paragraphs max",
-    cta_type: "pilot program / free hardware sample",
-    personalization_level: "high — acknowledge the prior outreach and make the offer feel final",
+    cta_type: "pilot program / free hardware demo unit",
+    personalization_level: "high — acknowledge the prior outreach naturally, make the offer feel genuine not pressured",
   },
 ];
 
