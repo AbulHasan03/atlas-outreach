@@ -100,6 +100,10 @@ async function scheduleTodaysEmails(options = {}) {
       } else {
         // No draft exists — generate and save as draft
         const { subject, body } = await generateEmail(item.prospect, item.messageNumber);
+
+        // 15s delay to stay under Gemini 5 RPM free tier limit
+        await new Promise(r => setTimeout(r, 15000));
+
         const { data: row } = await sb.from('emails').insert({
           prospect_id:    item.prospect.id,
           message_number: item.messageNumber,
