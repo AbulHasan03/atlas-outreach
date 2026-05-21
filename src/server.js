@@ -17,6 +17,9 @@ const cadence  = require('../config/cadence');
 const app = express();
 app.use(express.json());
 
+// ── PING — lightweight warmup endpoint for cron-job.org ──────────────────────
+app.get('/ping', (req, res) => res.send('ok'));
+
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 const UI_PASSWORD  = process.env.UI_PASSWORD || 'atlas2024';
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
