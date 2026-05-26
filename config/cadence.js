@@ -37,7 +37,7 @@ const cadence = [
     subject_tone: "genuine, wrap-up, no pressure",
     purpose: "Final email. Be honest — say you've sent a few emails and don't want to keep showing up in their inbox. Paint a clear picture of what their gym could look like with Omni — members checking in on their own, no staff at the door, late-night sessions running smoothly. Invite them to come see it at the ZKTeco showroom if they're ever curious. End warmly.",
     length: "longest — 4 paragraphs with fuller, more personal sentences. Feels like a genuine note, not a sales pitch. Paint a picture rather than listing features.",
-    cta_type: "showroom visit — come see it in person, no commitment",
+    cta_type: "for NYC-area gyms: showroom visit at ZKTeco's Midtown Manhattan showroom on 39th Street. For out-of-area gyms: invite them to reach out directly to arrange a virtual demo or local rep visit",
     personalization_level: "high — most personal email of the sequence, should feel handwritten",
   },
 ];

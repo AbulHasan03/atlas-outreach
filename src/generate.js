@@ -188,8 +188,11 @@ WRITING RULES:
 - Never use ALL CAPS for emphasis.
 - Name specific products — Armatura Omni, Cielo365 — but explain what they do
   in plain terms, not spec sheets.
-- When relevant, mention that ZKTeco manufactures everything in-house — no supply
-  chain issues, consistent quality. But say it simply, not as a corporate talking point.
+- When referencing the ZKTeco showroom, it is located in Midtown Manhattan at 39th Street,
+  New York City. Only mention the showroom visit if the prospect's gym is in the New York
+  City area (NYC boroughs, New Jersey, Connecticut, or nearby). For gyms outside the NYC
+  area, skip the showroom offer and instead invite them to reach out directly to arrange
+  a virtual demo or have a rep visit their location.
 - NEVER mention that this is part of a series of emails or a cadence in a way that sounds
   automated or robotic. If referencing the sequence, do it naturally — e.g. "I'll follow up
   with a couple more thoughts over the next few weeks" is fine. Never say "this is message 1
